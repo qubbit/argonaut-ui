@@ -3,8 +3,8 @@ import { Socket } from 'phoenix';
 import api from '../api';
 import { fetchUserTeams } from './teams';
 
-const API_URL = 'https://argonaut-bay.herokuapp.com'
-const WEBSOCKET_URL = API_URL.replace(/(https|http)/, 'ws').replace('/api', '');
+const API_URL = 'https://theargonaut-bay.herokuapp.com/api'
+const WEBSOCKET_URL = API_URL.replace(/^http/, 'ws').replace('/api', '');
 
 function connectToSocket(dispatch) {
   const token = JSON.parse(localStorage.getItem('token'));

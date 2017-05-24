@@ -1,4 +1,4 @@
-const API = 'https://argonaut-bay.herokuapp.com'
+const API = 'https://theargonaut-bay.herokuapp.com/api'
 
 function headers() {
   const token = JSON.parse(localStorage.getItem('token'));
