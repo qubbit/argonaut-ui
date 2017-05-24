@@ -44,6 +44,7 @@ class Home extends Component {
     this.state = {
       page: 1,
       page_size: 5,
+      user: userSettings(),
     };
   }
 
@@ -96,13 +97,13 @@ class Home extends Component {
         onTeamJoinOrLeave={this.handleTeamJoinOrLeave}
         onTeamDelete={this.handleTeamDelete}
         currentUserTeamIds={currentUserTeamIds}
-        currentUser={userSettings()}
+        currentUser={this.state.user}
       />
     );
   }
 
   render() {
-    const allowNewTeamCreation = true;
+    const allowNewTeamCreation = this.state.user.is_admin;
     let newTeamFormContainer;
     if(allowNewTeamCreation) {
         newTeamFormContainer = <div className={`card ${css(styles.card)}`}>
