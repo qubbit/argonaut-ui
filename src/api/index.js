@@ -1,4 +1,4 @@
-const API = process.env.REACT_APP_API_URL;
+const API = 'https://argonaut-bay.herokuapp.com'
 
 function headers() {
   const token = JSON.parse(localStorage.getItem('token'));

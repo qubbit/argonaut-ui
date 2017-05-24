@@ -3,7 +3,7 @@ import { Socket } from 'phoenix';
 import api from '../api';
 import { fetchUserTeams } from './teams';
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = 'https://argonaut-bay.herokuapp.com'
 const WEBSOCKET_URL = API_URL.replace(/(https|http)/, 'ws').replace('/api', '');
 
 function connectToSocket(dispatch) {
