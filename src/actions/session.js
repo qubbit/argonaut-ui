@@ -35,7 +35,8 @@ export function login(data, router) {
       router.transitionTo('/');
     })
     .catch((e) => {
-      dispatch({ type: 'SHOW_ALERT', message: 'Invalid email or password' });
+      // TODO: perhaps message should be e.message instead
+      dispatch({ type: 'SHOW_ALERT_FAILURE', message: 'Invalid email or password' });
       console.error(e);
     });
 }

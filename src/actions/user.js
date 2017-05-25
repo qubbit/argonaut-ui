@@ -21,6 +21,7 @@ export function vacationMode(userId) {
   return (dispatch) => api.post(`/users/${userId}/vacation`, {})
     .then((response) => {
       dispatch({ type: 'USER_VACATION_MODE_SUCCESS', response });
+      dispatch({ type: 'SHOW_ALERT_SUCCESS', timeout: 5000, message: 'All your reservations have been cleared 😇' });
     });
 }
 

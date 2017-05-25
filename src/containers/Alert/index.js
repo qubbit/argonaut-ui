@@ -7,6 +7,7 @@ import Alert from '../../components/Alert';
 type Props = {
   pathname: string,
   visible: boolean,
+  type: string,
   timeout?: number,
   message: string,
   hideAlert: () => void,
@@ -31,13 +32,14 @@ class AlertContainer extends Component {
   handleClose = () => this.props.hideAlert();
 
   render() {
-    const { visible, timeout, message } = this.props;
+    const { visible, type, timeout, message } = this.props;
 
     return visible
       ? <Alert
         message={message}
         timeout={timeout}
         onClose={this.handleClose}
+        type={type}
       />
       : null;
   }
@@ -48,6 +50,7 @@ export default connect(
     message: state.alert.message,
     visible: state.alert.visible,
     timeout: state.alert.timeout,
+    type: state.alert.type
   }),
   { hideAlert }
 )(AlertContainer);
