@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   input: {
     display: 'inline-block',
     marginLeft: '4px',
-    width: '200px',
+    width: '640px',
     padding: '2px',
     lineHeight: '1',
     fontSize: '12px',
@@ -45,25 +45,26 @@ type Props = {
 class DescriptionForm extends Component {
   props: Props
 
-  handleSubmit = (data) => this.props.onSubmit(data);
+  handleSubmit = (data) => {
+    if(this.props.pristine) {
+      this.props.onCancel();
+      return false;
+    }
+
+    this.props.onSubmit(data);
+  }
 
   render() {
     const { handleSubmit, submitting } = this.props;
 
     return (
       <form onSubmit={handleSubmit(this.handleSubmit)}>
-        <Field
-          type="text"
-          name="description"
-          component="input"
-          className={`form-control ${css(styles.input)}`}
-        />
         <button
           type="submit"
           disabled={submitting}
           className={css(styles.button, styles.submitButton)}
         >
-          <span className="fa fa-check" />
+          <span className="fa fa-check" /> Update
         </button>
         <button
           type="button"
@@ -71,8 +72,16 @@ class DescriptionForm extends Component {
           onClick={this.props.onCancel}
           className={css(styles.button, styles.cancelButton)}
         >
-          <span className="fa fa-ban" />
+          <span className="fa fa-times" /> Cancel
         </button>
+        <Field
+          type="text"
+          name="description"
+          component="input"
+          className={`form-control ${css(styles.input)}`}
+          autoFocus={true}
+          autoComplete="off"
+        />
       </form>
     );
   }
