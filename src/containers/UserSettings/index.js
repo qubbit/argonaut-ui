@@ -29,10 +29,10 @@ class UserSettingsContainer extends Component {
 
   props: Props
 
-  handleUserProfileUpdate = (data) => {
-    Object.assign(data, {id: this.props.currentUser.id});
-    this.props.updateUserProfile(data);
-  }
+  // NOTE: we are returning a Promise object here
+  // this allows redux-form to set the submitting flag to
+  // true until the promise is resolved
+  handleUserProfileUpdate = (data) => this.props.updateUserProfile(data);
 
   handleVacationMode = (user) => {
     this.props.vacationMode(this.props.currentUser.id);

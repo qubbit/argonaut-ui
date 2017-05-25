@@ -37,7 +37,8 @@ const TeamListItem = ({ team, currentUserTeamIds, currentUser, onTeamJoinOrLeave
         {deleteButton}
         <button
           onClick={(e) => onTeamJoinOrLeave(e.currentTarget.innerText, team.id)}
-          className="btn btn-sm"
+          className='btn btn-sm'
+          style={{ width: '72px' }}
         >
           {isJoined ? <span><i className='fa fa-sign-out'></i> Leave</span> : <span><i className='fa fa-sign-in'></i> Join</span>}
         </button>

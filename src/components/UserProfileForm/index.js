@@ -40,7 +40,7 @@ class UserProfileForm extends Component {
   handleSubmit = (data) => this.props.onSubmit(data);
 
   render() {
-    const { errors, handleSubmit, submitting } = this.props;
+    const { errors, handleSubmit, pristine, submitting } = this.props;
 
     return (
       <form style={{ width: '640px' }} onSubmit={handleSubmit(this.handleSubmit)} >
@@ -131,14 +131,11 @@ class UserProfileForm extends Component {
           />
           <Errors name="last_name" errors={errors} />
         </div>
-
         <button
           type="submit"
-          disabled={submitting}
+          disabled={pristine || submitting}
           className="btn btn-primary"
-        >
-          {submitting ? 'Saving...' : 'Update'}
-        </button>
+        >{submitting ? 'Saving' : 'Update'}</button>
 
       </form>
     );
