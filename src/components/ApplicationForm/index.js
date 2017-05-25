@@ -35,9 +35,9 @@ class ApplicationForm extends Component {
         onSubmit={handleSubmit(this.handleSubmit)}
       >
         <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Create application</h3>
-        <Field name="name" type="text" component={Input} placeholder="Name" style={{ marginBottom: '1rem' }} />
-        <Field name="ping" type="text" component={Input} placeholder="Ping" style={{ marginBottom: '1rem' }} />
-        <Field name="repo" type="text" component={Input} placeholder="Repo" style={{ marginBottom: '1rem' }} />
+        <Field name="name" type="text" component={Input} placeholder="Name (probably has no spaces)" style={{ marginBottom: '1rem' }} />
+        <Field name="ping" type="text" component={Input} placeholder="Ping route (usually _ping)" style={{ marginBottom: '1rem' }} value="_ping" />
+        <Field name="repo" type="text" component={Input} placeholder="Repo (like pbm/epamotron)" style={{ marginBottom: '1rem' }} />
         <button
           type="submit"
           disabled={submitting}
@@ -54,6 +54,12 @@ const validate = (values) => {
   const errors = {};
   if (!values.name) {
     errors.name = 'Required';
+  }
+  if (!values.ping) {
+    errors.ping = 'Required';
+  }
+  if (!values.repo) {
+    errors.repo = 'Required';
   }
   return errors;
 };

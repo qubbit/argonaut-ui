@@ -35,7 +35,7 @@ class EnvironmentForm extends Component {
         onSubmit={handleSubmit(this.handleSubmit)}
       >
         <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Create environment</h3>
-        <Field name="name" type="text" component={Input} placeholder="Name" style={{ marginBottom: '1rem' }} />
+        <Field name="name" type="text" component={Input} placeholder="Name (like pbm1)" style={{ marginBottom: '1rem' }} />
         <Field name="description" type="text" component={Input} placeholder="Description" style={{ marginBottom: '1rem' }} />
         <button
           type="submit"
@@ -53,6 +53,9 @@ const validate = (values) => {
   const errors = {};
   if (!values.name) {
     errors.name = 'Required';
+  }
+  if (!values.description) {
+    errors.description = 'Required';
   }
   return errors;
 };
