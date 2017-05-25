@@ -77,13 +77,13 @@ class UserSettingsContainer extends Component {
                       <li>Matt Bramson </li>
                     </ul>
                     <ul>
-                      <li>Your name here </li>
+                      <li>Alan Baird</li>
                     </ul>
                     <ul>
-                      <li>Your name here</li>
+                      <li>Mike Lusting</li>
                     </ul>
                     <ul>
-                      <li>Your name here</li>
+                      <li>Chris Hutchinson</li>
                     </ul>
                   </div>
                 </TabPanel>
