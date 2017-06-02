@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
 
@@ -27,22 +28,26 @@ class EnvironmentForm extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, pristine, initialValues } = this.props;
+    const updating = initialValues.id ? true : false;
+    const label = updating ? 'Update' : 'Create';
 
     return (
       <form
         className={`card ${css(styles.card)}`}
         onSubmit={handleSubmit(this.handleSubmit)}
       >
-        <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Create environment</h3>
+        <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>
+          { updating ? 'Edit' : 'Create' } environment
+        </h3>
         <Field name="name" type="text" component={Input} placeholder="Name (like pbm1)" style={{ marginBottom: '1rem' }} />
         <Field name="description" type="text" component={Input} placeholder="Description" style={{ marginBottom: '1rem' }} />
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || pristine}
           className="btn btn-block btn-primary"
         >
-          {submitting ? 'Saving...' : 'Create'}
+          {submitting ? 'Saving...' : label }
         </button>
       </form>
     );
@@ -60,7 +65,16 @@ const validate = (values) => {
   return errors;
 };
 
-export default reduxForm({
+EnvironmentForm = reduxForm({
   form: 'environment',
   validate,
+  enableReinitialize: true
 })(EnvironmentForm);
+
+EnvironmentForm = connect(
+  (state) => ({
+    initialValues: state.team.editingEnvironment
+  })
+)(EnvironmentForm);
+
+export default EnvironmentForm;

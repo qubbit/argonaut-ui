@@ -104,6 +104,44 @@ export function fetchTeamApplications(teamId) {
     });
 }
 
+export function updateEnvironment(environment) {
+  return (dispatch) => api.patch(`/teams/${environment.team_id}/environments/${environment.id}`, environment)
+    .then((response) => {
+      dispatch({ type: 'UPDATE_ENVIRONMENT_SUCCESS', response });
+    })
+    .catch((error) => {
+      dispatch({ type: 'UPDATE_ENVIRONMENT_FAILURE', error });
+    });
+}
+
+export function setEditingEnvironment(environment) {
+  return (dispatch) => dispatch({ type: 'SET_EDITING_ENVIRONMENT', environment });
+}
+
+export function updateApplication(application) {
+  return (dispatch) => api.patch(`/teams/${application.team_id}/applications/${application.id}`, application)
+    .then((response) => {
+      dispatch({ type: 'UPDATE_APPLICATION_SUCCESS', response });
+    })
+    .catch((error) => {
+      dispatch({ type: 'UPDATE_APPLICATION_FAILURE', error });
+    });
+}
+
+export function setEditingApplication(application) {
+  return (dispatch) => dispatch({ type: 'SET_EDITING_APPLICATION', application });
+}
+
+export function loadApplication(applicationId) {
+  return (dispatch) => api.fetch(`/applications/${applicationId}`, {})
+    .then((response) => {
+      dispatch({ type: 'FETCH_APPLICATION_SUCCESS', response });
+    })
+    .catch((error) => {
+      dispatch({ type: 'FETCH_APPLICATION_FAILURE', error });
+    });
+}
+
 export function createTeamApplication(teamId, data) {
   return (dispatch) => api.post(`/teams/${teamId}/applications`, data)
     .then((response) => {

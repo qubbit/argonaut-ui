@@ -247,6 +247,10 @@ main {
   margin-right: 10px;
 }
 
+.applicationControls button:not(:last-child), .environmentControls button:not(:last-child){
+  margin-right: 10px;
+}
+
 .adminSectionHeader {
   margin: 20px 0;
 }

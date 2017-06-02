@@ -1,3 +1,5 @@
+import { sortBy } from 'lodash';
+
 const initialState = {
   channel: null,
   currentTeam: {},
@@ -5,6 +7,8 @@ const initialState = {
   applications: [],
   environments: [],
   loadingReservations: false,
+  editingApplication: {},
+  editingEnvironment: {},
   pagination: {
     total_pages: 0,
     total_entries: 0,
@@ -15,6 +19,37 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case 'SET_EDITING_APPLICATION':
+      return {
+        ...state,
+        editingApplication: action.application
+      };
+    case 'SET_EDITING_ENVIRONMENT':
+      return {
+        ...state,
+        editingEnvironment: action.environment
+      };
+    case 'FETCH_APPLICATION_SUCCESS':
+      return {
+        ...state,
+        applications: []
+      };
+    case 'UPDATE_APPLICATION_SUCCESS':
+      const appList = state.applications.filter(a => a.id != action.response.id);
+
+      return {
+        ...state,
+        editingApplication: {},
+        applications: sortBy([ ...appList, action.response ], a => a.name)
+      };
+    case 'UPDATE_ENVIRONMENT_SUCCESS':
+      const envList = state.environments.filter(e => e.id != action.response.id);
+
+      return {
+        ...state,
+        editingEnvironment: {},
+        environments: sortBy([ ...envList, action.response ], e => e.name)
+      };
     case 'FETCH_TEAM_RESERVATIONS_SUCCESS':
       return {
         ...state,
