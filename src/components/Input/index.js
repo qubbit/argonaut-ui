@@ -11,9 +11,10 @@ type Props = {
   style?: Object,
   inputStyle?: Object,
   className?: string,
+  readOnly?: boolean
 }
 
-const Input = ({ input, label, type, placeholder, meta, style, inputStyle, className }: Props) => {
+const Input = ({ input, label, type, placeholder, meta, style, inputStyle, className, readOnly }: Props) => {
   return <div style={{ ...style }}>
     {label && <label htmlFor={input.name}>{label}</label>}
     <input
@@ -22,6 +23,7 @@ const Input = ({ input, label, type, placeholder, meta, style, inputStyle, class
       placeholder={placeholder}
       style={{ ...inputStyle }}
       className={className || 'form-control'}
+      readOnly={readOnly}
     />
     {meta.touched && meta.error &&
       <div style={{ fontSize: '85%', color: '#cc5454' }}>{meta.error}</div>

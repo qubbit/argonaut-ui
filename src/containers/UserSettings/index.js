@@ -34,9 +34,7 @@ class UserSettingsContainer extends Component {
   // true until the promise is resolved
   handleUserProfileUpdate = (data) => this.props.updateUserProfile(data);
 
-  handleVacationMode = (user) => {
-    this.props.vacationMode(this.props.currentUser.id);
-  }
+  handleVacationMode = (user) => this.props.vacationMode(this.props.currentUser.id);
 
   render() {
     return (
@@ -99,7 +97,8 @@ class UserSettingsContainer extends Component {
 export default connect( (state) => ({
     currentUser: state.session.currentUser,
     pagination: state.team.pagination,
-    teams: state.teams
+    teams: state.teams,
+    submitting: false
   }),
   { updateUserProfile, vacationMode }
 )(UserSettingsContainer);

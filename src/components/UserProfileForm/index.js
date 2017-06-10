@@ -1,9 +1,12 @@
 // @flow
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import Input from '../Input';
 import Select from '../Select';
 import Errors from '../Errors';
+import { API_URL } from '../../config';
+import { generateToken } from '../../utils';
 
 type Props = {
   onSubmit: () => void,
@@ -15,13 +18,6 @@ type Props = {
 class UserProfileForm extends Component {
   props: Props
 
-  componentWillMount() {
-    if (this.props.pristine) this.props.initialize(this.props.user);
-  }
-
-  componentWillUnmount() {
-    if (this.props.pristine) this.props.destroy();
-  }
   constructor(props) {
     super(props)
 
@@ -34,10 +30,18 @@ class UserProfileForm extends Component {
       {value: 'America/New_York', text: 'New York'},
       {value: 'America/Phoenix', text: 'Phoenix'},
       {value: 'America/Puerto_Rico', text: 'Puerto Rico'}
-    ], user: this.props.user };
+    ], user: this.props.initialValues };
   }
 
   handleSubmit = (data) => this.props.onSubmit(data);
+
+  regenerateToken = (e) => {
+    const token = generateToken(64);
+    this.props.change('api_token', token);
+    // TODO: investigate why this does not re-render the token url
+    this.setState({ user: { ...this.state.user, token }});
+    e.preventDefault();
+  }
 
   render() {
     const { errors, handleSubmit, pristine, submitting } = this.props;
@@ -80,7 +84,6 @@ class UserProfileForm extends Component {
             name="email"
             type="email"
             component={Input}
-            text={this.state.user.email}
           />
           <Errors name="email" errors={errors} />
         </div>
@@ -93,7 +96,6 @@ class UserProfileForm extends Component {
             name="avatar_url"
             type="text"
             component={Input}
-            text={this.state.user.avatar_url}
           />
           <Errors name="avatar_url" errors={errors} />
         </div>
@@ -104,7 +106,6 @@ class UserProfileForm extends Component {
             name="first_name"
             type="text"
             component={Input}
-            text={this.state.user.first_name}
           />
           <Errors name="first_name" errors={errors} />
         </div>
@@ -115,7 +116,6 @@ class UserProfileForm extends Component {
             name="last_name"
             type="text"
             component={Input}
-            text={this.state.user.last_name}
           />
           <Errors name="last_name" errors={errors} />
         </div>
@@ -127,9 +127,26 @@ class UserProfileForm extends Component {
             type="select"
             component={Select}
             options={this.state.timeZones}
-            text={this.state.user.avatar_url}
           />
-          <Errors name="last_name" errors={errors} />
+          <Errors name="time_zone" errors={errors} />
+        </div>
+
+        <div style={{ marginBottom: '1rem' }}>
+          <label>API Token</label>
+          <Field
+            name="api_token"
+            component={Input}
+            style={{ display: 'inline' }}
+            readOnly={true}
+          />
+          <button className='btn' onClick={this.regenerateToken} style={{ marginTop: '1rem' }}><i className='fa fa-refresh' /> Regenerate</button>
+          <Errors name="api_token" errors={errors} />
+        </div>
+        <div style={{ marginBottom: '1rem' }}>
+          <div className='alert alert-info'>
+            <p>This is a read-only token that lets you access reservation data. You may regenerate a new token if you think the current one is compromised.</p>
+            <pre>{API_URL}/reservations?token={this.state.user.api_token}i</pre>
+          </div>
         </div>
         <button
           type="submit"
@@ -160,9 +177,16 @@ const validate = (values) => {
   return errors;
 };
 
-let userProfileForm = reduxForm({
+UserProfileForm = reduxForm({
   form: 'userProfile',
   validate,
 })(UserProfileForm);
 
-export default userProfileForm;
+UserProfileForm = connect(
+  (state) => ({
+    initialValues: state.session.currentUser
+  }),
+  {}
+)(UserProfileForm);
+
+export default UserProfileForm;

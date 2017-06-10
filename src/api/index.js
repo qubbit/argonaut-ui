@@ -1,4 +1,4 @@
-const API = 'https://theargonaut-bay.herokuapp.com/api'
+import { API_URL} from '../config';
 
 function headers() {
   const token = JSON.parse(localStorage.getItem('token'));
@@ -28,7 +28,7 @@ function queryString(params) {
 
 export default {
   fetch(url, params = {}) {
-    return fetch(`${API}${url}${queryString(params)}`, {
+    return fetch(`${API_URL}${url}${queryString(params)}`, {
       method: 'GET',
       headers: headers(),
     })
@@ -38,7 +38,7 @@ export default {
   post(url, data) {
     const body = JSON.stringify(data);
 
-    return fetch(`${API}${url}`, {
+    return fetch(`${API_URL}${url}`, {
       method: 'POST',
       headers: headers(),
       body,
@@ -49,7 +49,7 @@ export default {
   patch(url, data) {
     const body = JSON.stringify(data);
 
-    return fetch(`${API}${url}`, {
+    return fetch(`${API_URL}${url}`, {
       method: 'PATCH',
       headers: headers(),
       body,
@@ -58,7 +58,7 @@ export default {
   },
 
   delete(url) {
-    return fetch(`${API}${url}`, {
+    return fetch(`${API_URL}${url}`, {
       method: 'DELETE',
       headers: headers(),
     })
