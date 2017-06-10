@@ -2,8 +2,8 @@ import { reset } from 'redux-form';
 import { Socket } from 'phoenix';
 import api from '../api';
 import { fetchUserTeams } from './teams';
+import { API_URL} from '../config';
 
-const API_URL = 'https://theargonaut-bay.herokuapp.com/api'
 const WEBSOCKET_URL = API_URL.replace(/^http/, 'ws').replace('/api', '');
 
 function connectToSocket(dispatch) {

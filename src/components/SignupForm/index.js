@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
 import Errors from '../Errors';
+import { generateToken } from '../../utils/';
 
 const styles = StyleSheet.create({
   card: {
@@ -24,7 +25,10 @@ type Props = {
 class SignupForm extends Component {
   props: Props
 
-  handleSubmit = (data) => this.props.onSubmit(data);
+  handleSubmit = (data) => {
+    data.api_token = generateToken(64);
+    return this.props.onSubmit(data);
+  }
 
   render() {
     const { errors, handleSubmit, submitting } = this.props;
