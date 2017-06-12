@@ -16,13 +16,13 @@ You can access reservation and teams data by using an API access token. This tok
 
 Note: these examples use a fake domain name and an example token.
 
-** Get teams (endpoint allows pagination): **
+**Get teams (endpoint allows pagination):**
 
 ```
 https://argonaut.io/api/readonly/teams?token=5fa54ca12f3912990fd6e0a2e7ef587a2cda569a9cad0a5a1adb73b20007bb64
 ```
 
-** Get all the reservations for a team with id of 1: **
+**Get all the reservations for a team with an id of 1:**
 
 ```
 https://argonaut.io/api/readonly/teams/1/reservations/?token=5fa54ca12f3912990fd6e0a2e7ef587a2cda569a9cad0a5a1adb73b20007bb64
