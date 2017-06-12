@@ -1,4 +1,6 @@
 import api from '../api';
+import Push from 'push.js';
+import store from '../store';
 
 export function fetchTeamTable(teamId) {
   return (dispatch) => {
@@ -13,16 +15,39 @@ export function fetchTeamTable(teamId) {
   }
 }
 
+function notifyUser(message, actorId, excludeCurrentUser = true) {
+  const currentUserId = store.getState().session.currentUser.id;
+
+  if(excludeCurrentUser) {
+    if(actorId == currentUserId) return;
+  }
+
+  Push.create("Argonaut", {
+    body: message,
+    icon: '/images/android-chrome-192x192.png',
+    timeout: 5000,
+    onClick: function () {
+      window.focus();
+      this.close();
+    }
+  });
+}
+
 export function connectToChannel(socket, teamId) {
   return (dispatch) => {
     if (!socket) { return false; }
-    const channel = socket.channel(`teams:${teamId}`);
 
+    const channel = socket.channel(`teams:${teamId}`);
     channel.on('reservation_created', (message) => {
+      const notification = `${message.user.username} reserved ${message.environment.name}:${message.application.name}`;
+      notifyUser(notification, message.user.id);
       dispatch({ type: 'RESERVATION_CREATED', message });
     });
 
     channel.on('reservation_deleted', (message) => {
+      let reservation = store.getState().team.reservations.find(x => x.id == message.reservation_id);
+      const notification = `${reservation.environment.name}:${reservation.application.name} is available!`;
+      notifyUser(notification, reservation.user.id);
       dispatch({ type: 'RESERVATION_DELETED', message });
     });
 

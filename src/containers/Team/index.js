@@ -60,12 +60,10 @@ class Team extends Component {
   reservationList: () => void
 
   handleReservation = (data) => {
-    console.log('handleReservation');
     this.props.createReservation(this.props.channel, data);
   }
 
   handleRelease = (data) => {
-    console.log('handleRelease');
     this.props.deleteReservation(this.props.channel, data);
   }
 
