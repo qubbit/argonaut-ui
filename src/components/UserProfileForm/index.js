@@ -5,7 +5,7 @@ import { Field, reduxForm } from 'redux-form';
 import Input from '../Input';
 import Select from '../Select';
 import Errors from '../Errors';
-import { API_URL } from '../../config';
+import { READONLY_API_URL } from '../../config';
 import { generateToken } from '../../utils';
 
 type Props = {
@@ -145,7 +145,7 @@ class UserProfileForm extends Component {
         <div style={{ marginBottom: '1rem' }}>
           <div className='alert alert-info'>
             <p>This is a read-only token that lets you access reservation data. You may regenerate a new token if you think the current one is compromised.</p>
-            <pre>{API_URL}/reservations?token={this.state.user.api_token}i</pre>
+            <pre>{READONLY_API_URL}/teams/:team_id/reservations/?token={this.state.user.api_token}</pre>
           </div>
         </div>
         <button
