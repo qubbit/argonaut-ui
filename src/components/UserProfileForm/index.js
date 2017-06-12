@@ -144,7 +144,7 @@ class UserProfileForm extends Component {
         </div>
         <div style={{ marginBottom: '1rem' }}>
           <div className='alert alert-info'>
-            <p>This is a read-only token that lets you access reservation data. You may regenerate a new token if you think the current one is compromised.</p>
+            <p>This is permanent token that lets you access the read-only API. You may regenerate a new token if you think your current one is compromised. Example:</p>
             <pre>{READONLY_API_URL}/teams/:team_id/reservations/?token={this.state.user.api_token}</pre>
           </div>
         </div>
