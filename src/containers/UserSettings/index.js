@@ -75,6 +75,9 @@ class UserSettingsContainer extends Component {
                       <li>Matt Bramson </li>
                     </ul>
                     <ul>
+                      <li>Chris Doggett</li>
+                    </ul>
+                    <ul>
                       <li>Alan Baird</li>
                     </ul>
                     <ul>
