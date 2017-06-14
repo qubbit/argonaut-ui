@@ -18,7 +18,13 @@ import {
   deleteTeamEnvironment,
   fetchTeamApplications,
   createTeamApplication,
-  deleteTeamApplication
+  updateApplication,
+  updateEnvironment,
+  deleteTeamApplication,
+  loadApplication,
+  setEditingApplication,
+  setEditingEnvironment
+
 } from '../../actions/team';
 import { Application, Environment, Pagination } from '../../types';
 
@@ -65,13 +71,23 @@ class TeamAdmin extends Component {
   }
 
   handleApplicationFormSubmit = (data) => {
-    Object.assign(data, {team_id: this.props.params.id});
-    this.props.createTeamApplication(this.props.params.id, data);
+    const payload = { ...data, team_id: this.props.params.id };
+
+    if(payload.id) {
+      this.props.updateApplication(payload);
+    } else {
+      this.props.createTeamApplication(this.props.params.id, payload);
+    }
   }
 
   handleEnvironmentFormSubmit = (data) => {
-    Object.assign(data, {team_id: this.props.params.id});
-    this.props.createTeamEnvironment(this.props.params.id, data);
+    const payload = { ...data, team_id: this.props.params.id };
+
+    if(payload.id) {
+      this.props.updateEnvironment(payload);
+    } else {
+      this.props.createTeamEnvironment(this.props.params.id, payload);
+    }
   }
 
   handleApplicationDelete = (applicationId) => {
@@ -82,12 +98,30 @@ class TeamAdmin extends Component {
     this.props.deleteTeamEnvironment(this.props.params.id, environmentId);
   }
 
+  handleApplicationUpdate = (data) => {
+    return this.props.setEditingApplication(data);
+  }
+
+  handleEnvironmentUpdate = (data) => {
+    return this.props.setEditingEnvironment(data);
+  }
+
   applicationList = () => {
-    return this.props.applications.map(a => <ApplicationListItem key={`application-${a.id}`} application={a} onApplicationDelete={this.handleApplicationDelete}/>);
+    return this.props.applications.map(a => <ApplicationListItem
+      key={`application-${a.id}`}
+      application={a}
+      onApplicationUpdate={this.handleApplicationUpdate}
+      onApplicationDelete={this.handleApplicationDelete}
+    />);
   }
 
   environmentList = () => {
-    return this.props.environments.map(e => <EnvironmentListItem key={`environment-${e.id}`} environment={e} onEnvironmentDelete={this.handleEnvironmentDelete}/>);
+    return this.props.environments.map(e => <EnvironmentListItem
+      key={`environment-${e.id}`}
+      environment={e}
+      onEnvironmentUpdate={this.handleEnvironmentUpdate}
+      onEnvironmentDelete={this.handleEnvironmentDelete}
+    />);
   }
 
   render() {
@@ -125,7 +159,25 @@ export default connect(
     environments: state.team.environments,
     presentUsers: state.team.presentUsers,
     currentUser: state.session.currentUser,
-    pagination: state.team.pagination
+    pagination: state.team.pagination,
+    editingApplication: state.team.editingApplication
   }),
-  { fetchTeamTable, connectToChannel, leaveChannel, createReservation, deleteReservation, updateTeam, fetchTeamApplications, fetchTeamEnvironments, createTeamApplication, deleteTeamApplication, createTeamEnvironment, deleteTeamEnvironment }
+  { fetchTeamTable,
+    connectToChannel,
+    leaveChannel,
+    createReservation,
+    deleteReservation,
+    updateTeam,
+    fetchTeamApplications,
+    fetchTeamEnvironments,
+    createTeamApplication,
+    updateApplication,
+    updateEnvironment,
+    deleteTeamApplication,
+    createTeamEnvironment,
+    deleteTeamEnvironment,
+    loadApplication,
+    setEditingApplication,
+    setEditingEnvironment
+  }
 )(TeamAdmin);

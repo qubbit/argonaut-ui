@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
 
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
 type Props = {
   onSubmit: () => void,
   handleSubmit: () => void,
-  submitting: boolean,
+  submitting: boolean
 }
 
 class ApplicationForm extends Component {
@@ -27,23 +28,27 @@ class ApplicationForm extends Component {
   }
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { handleSubmit, submitting, pristine, initialValues } = this.props;
+    const updating = initialValues.id ? true : false;
+    const label = updating ? 'Update' : 'Create';
 
     return (
       <form
         className={`card ${css(styles.card)}`}
         onSubmit={handleSubmit(this.handleSubmit)}
       >
-        <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Create application</h3>
+        <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>
+          { updating ? 'Edit' : 'Create' } application
+        </h3>
         <Field name="name" type="text" component={Input} placeholder="Name (probably has no spaces)" style={{ marginBottom: '1rem' }} />
-        <Field name="ping" type="text" component={Input} placeholder="Ping route (usually _ping)" style={{ marginBottom: '1rem' }} value="_ping" />
+        <Field name="ping" type="text" component={Input} placeholder="Ping route (usually _ping)" style={{ marginBottom: '1rem' }} />
         <Field name="repo" type="text" component={Input} placeholder="Repo (like pbm/epamotron)" style={{ marginBottom: '1rem' }} />
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || pristine}
           className="btn btn-block btn-primary"
         >
-          {submitting ? 'Saving...' : 'Create'}
+          { submitting ? 'Saving...' : label }
         </button>
       </form>
     );
@@ -64,7 +69,16 @@ const validate = (values) => {
   return errors;
 };
 
-export default reduxForm({
+ApplicationForm = reduxForm({
   form: 'application',
   validate,
+  enableReinitialize: true
 })(ApplicationForm);
+
+ApplicationForm = connect(
+  (state) => ({
+    initialValues: state.team.editingApplication
+  })
+)(ApplicationForm);
+
+export default ApplicationForm;
