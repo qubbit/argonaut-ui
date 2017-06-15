@@ -258,3 +258,9 @@ main {
 button a {
   color: #000;
 }
+
+.login-form-links {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}

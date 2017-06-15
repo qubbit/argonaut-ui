@@ -53,6 +53,30 @@ export function signup(data, router) {
     });
 }
 
+export function forgotPassword(data, router) {
+  return (dispatch) => api.post('/forgot_password', data)
+    .then((response) => {
+      router.transitionTo('/');
+      dispatch({ type: 'SHOW_ALERT_SUCCESS', message: response.message });
+    })
+    .catch((error) => {
+      dispatch({ type: 'SHOW_ALERT_FAILURE', message: error.message });
+      dispatch({ type: 'FORGOT_PASSWORD_FAILURE', error });
+    });
+}
+
+export function resetPassword(data, router) {
+  return (dispatch) => api.post('/reset_password', data)
+    .then((response) => {
+      router.transitionTo('/');
+      dispatch({ type: 'SHOW_ALERT_SUCCESS', message: response.message });
+    })
+    .catch((error) => {
+      dispatch({ type: 'SHOW_ALERT_FAILURE', message: error.message });
+      dispatch({ type: 'RESET_PASSWORD_FAILURE', error });
+    });
+}
+
 export function logout(router) {
   return (dispatch) => api.delete('/sessions')
     .then(() => {

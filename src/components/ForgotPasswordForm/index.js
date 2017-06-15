@@ -4,6 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router';
 import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
+import Errors from '../Errors';
 
 const styles = StyleSheet.create({
   card: {
@@ -15,42 +16,46 @@ const styles = StyleSheet.create({
 
 type Props = {
   onSubmit: () => void,
-  handleSubmit: () => void,
   submitting: boolean,
+  handleSubmit: () => void,
+  errors: any,
 }
 
-class LoginForm extends Component {
+class ForgotPasswordForm extends Component {
   props: Props
 
   handleSubmit = (data) => this.props.onSubmit(data);
 
   render() {
-    const { handleSubmit, submitting } = this.props;
+    const { errors, handleSubmit, pristine, submitting } = this.props;
 
     return (
       <form
         className={`card ${css(styles.card)}`}
         onSubmit={handleSubmit(this.handleSubmit)}
       >
-        <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Login to Argonaut</h3>
-        <Field name="email" type="text" component={Input} placeholder="Email" style={{ marginBottom: '1rem' }} />
-        <Field name="password" type="password" component={Input} placeholder="Password" style={{ marginBottom: '1rem' }} />
+        <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Forgot Password</h3>
+        <div style={{ marginBottom: '1rem' }}>
+          <Field
+            name="email"
+            type="email"
+            component={Input}
+            placeholder="Email"
+          />
+          <Errors name="email" errors={errors} />
+        </div>
         <button
           type="submit"
-          disabled={submitting}
+          disabled={submitting || pristine}
           className="btn btn-block btn-primary"
         >
-          {submitting ? 'Logging in...' : 'Login'}
+          {submitting ? 'Submitting...' : 'Reset Password'}
         </button>
         <hr style={{ margin: '2rem 0' }} />
-        <div className="login-form-links">
-          <Link to="/signup" className="btn btn-secondary">
-            Create a New Account
-          </Link>
-          <Link to="/forgot_password" className="btn btn-secondary">
-            Forgot Password
-          </Link>
-        </div>
+        <p>
+          In the off chance you remembered your password, click here to <Link to="/login">
+            login</Link>.
+        </p>
       </form>
     );
   }
@@ -58,16 +63,15 @@ class LoginForm extends Component {
 
 const validate = (values) => {
   const errors = {};
+
   if (!values.email) {
     errors.email = 'Required';
   }
-  if (!values.password) {
-    errors.password = 'Required';
-  }
+
   return errors;
 };
 
 export default reduxForm({
-  form: 'login',
+  form: 'forgot_password',
   validate,
-})(LoginForm);
+})(ForgotPasswordForm);
