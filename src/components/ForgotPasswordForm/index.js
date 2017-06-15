@@ -53,8 +53,7 @@ class ForgotPasswordForm extends Component {
         </button>
         <hr style={{ margin: '2rem 0' }} />
         <p>
-          In the off chance you remembered your password, click here to <Link to="/login">
-            login</Link>.
+          On the off chance you remembered your password, click here to <Link to="/login"> login</Link>.
         </p>
       </form>
     );
