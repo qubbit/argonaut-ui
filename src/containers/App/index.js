@@ -7,6 +7,7 @@ import { authenticate, unauthenticate, logout } from '../../actions/session';
 import Home from '../Home';
 import Login from '../Login';
 import Signup from '../Signup';
+import ForgotPassword from '../ForgotPassword';
 import Alert from '../Alert';
 import Team from '../Team';
 import TeamAdmin from '../TeamAdmin';
@@ -71,6 +72,7 @@ class App extends Component {
             </div>
             <RedirectAuthenticated exactly pattern="/login" component={Login} {...authProps} />
             <RedirectAuthenticated exactly pattern="/signup" component={Signup} {...authProps} />
+            <RedirectAuthenticated exactly pattern="/forgot_password" component={ForgotPassword} {...authProps} />
             <Miss component={NotFound} />
           </div>
         )}
