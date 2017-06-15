@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
   link: {
     color: '#555459',
     fontSize: '22px',
-    fontWeight: 'bold',
+    display: 'flex',
+    alignItems: 'center',
     ':hover': {
       textDecoration: 'none',
     },
@@ -28,7 +29,10 @@ const styles = StyleSheet.create({
 
 const Navbar = () =>
   <nav className={css(styles.navbar)}>
-    <Link to="/" className={css(styles.link)}><img height='40' alt='Argonaut' src='/images/ArgonautLogo.png'/></Link>
+    <Link to="/" className={css(styles.link)}>
+      <img width='48' alt='Argonaut' src='/images/argonaut_v2.svg'/>
+      <span style={{ fontSize: '2.2rem', color: '#000', marginLeft: '13px' }} className="logo-text">Argonaut</span>
+    </Link>
   </nav>;
 
 export default Navbar;
