@@ -28,7 +28,7 @@ export function userSettings() {
 }
 
 export function login(data, router) {
-  return (dispatch) => api.post('/sessions', data)
+  return (dispatch) => api.post('/anonymous/sessions', data)
     .then((response) => {
       setCurrentUser(dispatch, response);
       dispatch(reset('login'));
@@ -42,7 +42,7 @@ export function login(data, router) {
 }
 
 export function signup(data, router) {
-  return (dispatch) => api.post('/users', data)
+  return (dispatch) => api.post('/anonymous/users', data)
     .then((response) => {
       setCurrentUser(dispatch, response);
       dispatch(reset('signup'));
@@ -54,7 +54,7 @@ export function signup(data, router) {
 }
 
 export function forgotPassword(data, router) {
-  return (dispatch) => api.post('/forgot_password', data)
+  return (dispatch) => api.post('/anonymous/forgot_password', data)
     .then((response) => {
       router.transitionTo('/');
       dispatch({ type: 'SHOW_ALERT_SUCCESS', message: response.message });
@@ -66,7 +66,7 @@ export function forgotPassword(data, router) {
 }
 
 export function resetPassword(data, router) {
-  return (dispatch) => api.post('/reset_password', data)
+  return (dispatch) => api.post('/anonymous/reset_password', data)
     .then((response) => {
       router.transitionTo('/');
       dispatch({ type: 'SHOW_ALERT_SUCCESS', message: response.message });

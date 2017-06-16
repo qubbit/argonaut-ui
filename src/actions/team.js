@@ -78,7 +78,7 @@ export function deleteReservation(channel, data) {
 export function createReservation(channel, data) {
   return (dispatch) => new Promise((resolve, reject) => {
     channel.push('new_reservation', data)
-      .receive('error', () => reject());
+      .receive('error', (e) => reject());
   });
 }
 
