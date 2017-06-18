@@ -12,6 +12,7 @@ import ResetPassword from '../ResetPassword';
 import Alert from '../Alert';
 import Team from '../Team';
 import TeamAdmin from '../TeamAdmin';
+import Admin from '../Admin';
 import UserSettingsContainer from '../UserSettings';
 
 import NotFound from '../../components/NotFound';
@@ -70,6 +71,7 @@ class App extends Component {
               <MatchAuthenticated exactly pattern="/t/:id/admin" component={TeamAdmin} {...authProps} />
               <MatchAuthenticated exactly pattern="/settings" component={UserSettingsContainer} {...authProps} />
               <MatchAuthenticated exactly pattern="/settings/profile" component={UserProfileForm} {...authProps} />
+              <MatchAuthenticated exactly pattern="/admin" component={Admin} {...authProps} />
             </div>
             <RedirectAuthenticated exactly pattern="/login" component={Login} {...authProps} />
             <RedirectAuthenticated exactly pattern="/signup" component={Signup} {...authProps} />

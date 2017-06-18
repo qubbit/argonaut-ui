@@ -191,3 +191,15 @@ export function deleteTeamEnvironment(teamId, environmentId) {
     });
 }
 
+export function sendMail(data) {
+  return (dispatch) => api.post('/admin/mails/', {mail: data})
+    .then((response) => {
+      dispatch({ type: 'SEND_MAIL_SUCCESS', response });
+      dispatch({ type: 'SHOW_ALERT_SUCCESS', message: response.message });
+    })
+    .catch((error) => {
+      dispatch({ type: 'SHOW_ALERT_FAILURE', message: error.message });
+      dispatch({ type: 'SEND_MAIL_FAILURE', error });
+      console.error(error);
+    });
+}
