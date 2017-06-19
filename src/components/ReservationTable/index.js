@@ -5,6 +5,7 @@ import { css, StyleSheet } from 'aphrodite';
 import { Reservation as ReservationType } from '../../types';
 import { userSettings } from '../../actions/session';
 import { Link } from 'react-router';
+import store from '../../store';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,12 +41,7 @@ function getReservation(app, env, reservations) {
 class ReservationCell extends Component {
   constructor(props) {
     super(props);
-
     this.state = { reserved: false, hover: false }
-  }
-
-  update() {
-
   }
 
   onMouseOverHandler(e) {
@@ -60,12 +56,19 @@ class ReservationCell extends Component {
     const d = e.currentTarget.dataset;
     const data = {application_id: d.applicationId, environment_id: d.environmentId};
     this.props.eventHandlers.onReserveClick(data);
+    e.preventDefault();
   }
 
   doRelease = (e) => {
     const d = e.currentTarget.dataset;
     const data = {reservation_id: d.reservationId};
     this.props.eventHandlers.onReleaseClick(data);
+    e.preventDefault();
+  }
+
+  isMember = () => {
+    var state = store.getState();
+    return state.teams.currentUserTeams.find(t => t.id == state.team.currentTeam.id);
   }
 
   render() {
@@ -96,7 +99,10 @@ class ReservationCell extends Component {
 
     let reserveButton;
 
-    var canReserve = reservation == null
+    // TODO: optimize this expensive operation, the goal here is to allow
+    // creator of the ReservationCell to pass in canRelease and canReserve
+    var canReserve = reservation == null && this.isMember();
+
     if(canReserve) {
       reserveButton = <a href='#' className='tool-item' data-application-id={application.id} data-environment-id={environment.id} onClick={this.doReserve.bind(this)}>
          <i className='fa fa-2x fa-lock'></i>
