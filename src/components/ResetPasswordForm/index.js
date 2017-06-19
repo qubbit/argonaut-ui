@@ -1,7 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Link } from 'react-router';
 import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
 import Errors from '../Errors';

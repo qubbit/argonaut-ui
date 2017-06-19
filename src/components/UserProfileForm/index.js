@@ -5,7 +5,6 @@ import { Field, reduxForm } from 'redux-form';
 import Input from '../Input';
 import Select from '../Select';
 import Errors from '../Errors';
-import { READONLY_API_URL } from '../../config';
 import { generateToken } from '../../utils';
 
 type Props = {

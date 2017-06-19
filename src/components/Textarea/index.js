@@ -1,16 +1,6 @@
 // @flow
 import React, { Component } from 'react';
 
-type Props = {
-  name: string,
-  rows: Number,
-  cols: Number,
-  meta: Object,
-  stle: Object,
-  placeholder?: string,
-  className?: string,
-}
-
 class Textarea extends Component {
 
   constructor(props){

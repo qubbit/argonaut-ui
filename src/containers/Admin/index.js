@@ -7,7 +7,6 @@ import {
   leaveChannel,
   sendMail
 } from '../../actions/team';
-import { Pagination } from '../../types';
 
 class Admin extends Component {
 
