@@ -143,7 +143,7 @@ class UserProfileForm extends Component {
         </div>
         <div style={{ marginBottom: '1rem' }}>
           <div className='alert alert-info'>
-            This is permanent token that lets you access the read-only API. You may regenerate a new token if you think your current one is compromised.
+            This permanent token lets you access the read-only API. You may regenerate a new token if you think your current one is compromised.
           </div>
         </div>
         <button
