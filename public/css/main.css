@@ -16,6 +16,7 @@ strong, b {
 }
 
 body {
+  margin: 4em;
   font-family: Avenir Next,Avenir,Helvetica Neue,sans-serif;
   line-height: 1.5;
   color: #4b555a;
