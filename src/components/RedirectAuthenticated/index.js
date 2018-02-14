@@ -1,25 +1,26 @@
 // @flow
 import React from 'react';
-import { Match, Redirect } from 'react-router';
+import { Route, Redirect } from 'react-router-dom';
+
 
 type Props = {
   component: any,
-  pattern: string,
-  exactly?: boolean,
+  path: string,
+  exact?: boolean,
   isAuthenticated: boolean,
   willAuthenticate: boolean,
 }
 
 const RedirectAuthenticated = ({
-  pattern,
-  exactly,
+  path,
+  exact,
   isAuthenticated,
   willAuthenticate,
   component: Component,
 }: Props) =>
-  <Match
-    exactly={exactly}
-    pattern={pattern}
+  <Route
+    exact={exact}
+    path={path}
     render={(props) => {
       if (isAuthenticated) { return <Redirect to={{ pathname: '/' }} />; }
       if (willAuthenticate) { return null; }

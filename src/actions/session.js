@@ -27,12 +27,12 @@ export function userSettings() {
   return JSON.parse(localStorage.getItem('currentUser'));
 }
 
-export function login(data, router) {
+export function login(data, history) {
   return (dispatch) => api.post('/anonymous/sessions', data)
     .then((response) => {
       setCurrentUser(dispatch, response);
       dispatch(reset('login'));
-      router.transitionTo('/');
+      history.push('/');
     })
     .catch((e) => {
       // TODO: perhaps message should be e.message instead
@@ -41,22 +41,22 @@ export function login(data, router) {
     });
 }
 
-export function signup(data, router) {
+export function signup(data, history) {
   return (dispatch) => api.post('/anonymous/users', data)
     .then((response) => {
       setCurrentUser(dispatch, response);
       dispatch(reset('signup'));
-      router.transitionTo('/');
+      history.push('/');
     })
     .catch((error) => {
       dispatch({ type: 'SIGNUP_FAILURE', error });
     });
 }
 
-export function forgotPassword(data, router) {
+export function forgotPassword(data, history) {
   return (dispatch) => api.post('/anonymous/forgot_password', data)
     .then((response) => {
-      router.transitionTo('/');
+      history.push('/');
       dispatch({ type: 'SHOW_ALERT_SUCCESS', message: response.message });
     })
     .catch((error) => {
@@ -65,10 +65,10 @@ export function forgotPassword(data, router) {
     });
 }
 
-export function resetPassword(data, router) {
+export function resetPassword(data, history) {
   return (dispatch) => api.post('/anonymous/reset_password', data)
     .then((response) => {
-      router.transitionTo('/');
+      history.push('/');
       dispatch({ type: 'SHOW_ALERT_SUCCESS', message: response.message });
     })
     .catch((error) => {
@@ -77,13 +77,14 @@ export function resetPassword(data, router) {
     });
 }
 
-export function logout(router) {
+export function logout(history) {
   return (dispatch) => api.delete('/sessions')
     .then(() => {
       localStorage.removeItem('token');
       localStorage.removeItem('currentUser');
       dispatch({ type: 'LOGOUT' });
-      router.transitionTo('/login');
+      // debugger;
+      history.push('/login');
     });
 }
 

@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 import { css, StyleSheet } from 'aphrodite';
 import { Team } from '../../types';
 
@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
     background: '#2E3C56',
     position: 'fixed',
     height: '100%'
-
   },
 
   link: {
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
       borderTopRightRadius: '3px',
       borderBottomRightRadius: '3px',
       content: '""',
-    },
+    }
   },
 
   badge: {
@@ -68,44 +67,42 @@ type TeamLinkProps = {
 
 const TeamLink = ({ team }: TeamLinkProps) =>
   // TODO: use slug in URL
-  <Link to={"/t/" + team.id} className={css(styles.link)} activeClassName={css(styles.activeLink)}>
+  <NavLink to={"/t/" + team.id} className={css(styles.link)} activeClassName={css(styles.activeLink)}>
     <div className={css(styles.badge)}>
       <span>{team.name.substring(0,3).toUpperCase()}</span>
     </div>
-  </Link>;
+  </NavLink>;
 
 type Props = {
   teams: Array<Team>,
-  router: Object,
+  history: Object,
   onLogoutClick: () => void,
 }
 
-const Sidebar = ({ teams, router, onLogoutClick }: Props) =>
+const Sidebar = ({ teams, history, onLogoutClick }: Props) =>
   <div className={css(styles.sidebar)}>
     {teams.map((team) => <TeamLink key={team.id} team={team} />)}
-    <Link
+    <NavLink
       to="/"
-      activeOnlyWhenExact
       className={css(styles.link)}
       activeClassName={css(styles.activeLink)}
     >
       <div className={css(styles.badge)}>
         <span className="fa fa-plus" />
       </div>
-    </Link>
+    </NavLink>
     <div style={{ flex: '1' }} />
-    <Link
+    <NavLink
       to="/settings"
-      activeOnlyWhenExact
       className={css(styles.link)}
       activeClassName={css(styles.activeLink)}
     >
       <div className={css(styles.badge)}>
         <span className="fa fa-cog" />
       </div>
-    </Link>
+    </NavLink>
     <button
-      onClick={() => onLogoutClick(router)}
+      onClick={() => onLogoutClick(history)}
       className={css(styles.link, styles.logoutButton)}
     >
       <div className={css(styles.badge)}>

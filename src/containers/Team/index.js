@@ -34,21 +34,21 @@ type Props = {
 
 class Team extends Component {
   componentWillMount() {
-    this.props.fetchTeamTable(this.props.params.id);
+    this.props.fetchTeamTable(this.props.match.params.id);
   }
   componentDidMount() {
-    this.props.connectToChannel(this.props.socket, this.props.params.id);
+    this.props.connectToChannel(this.props.socket, this.props.match.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) {
+    if (nextProps.match.params.id !== this.props.match.params.id) {
       this.props.leaveChannel(this.props.channel);
-      this.props.connectToChannel(nextProps.socket, nextProps.params.id);
-      this.props.fetchTeamTable(nextProps.params.id);
+      this.props.connectToChannel(nextProps.socket, nextProps.match.params.id);
+      this.props.fetchTeamTable(nextProps.match.params.id);
     }
     if (!this.props.socket && nextProps.socket) {
-      this.props.connectToChannel(nextProps.socket, nextProps.params.id);
-      this.props.fetchTeamTable(nextProps.params.id);
+      this.props.connectToChannel(nextProps.socket, nextProps.match.params.id);
+      this.props.fetchTeamTable(nextProps.match.params.id);
     }
   }
 
@@ -67,7 +67,7 @@ class Team extends Component {
     this.props.deleteReservation(this.props.channel, data);
   }
 
-  handleDescriptionUpdate = (data) => this.props.updateTeam(this.props.params.id, data);
+  handleDescriptionUpdate = (data) => this.props.updateTeam(this.props.match.params.id, data);
 
   render() {
     const eventHandlers = { onReserveClick: this.handleReservation, onReleaseClick: this.handleRelease }

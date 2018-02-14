@@ -1,25 +1,25 @@
 // @flow
 import React from 'react';
-import { Match, Redirect } from 'react-router';
+import { Route, Redirect } from 'react-router-dom';
 
 type Props = {
-  pattern: string,
-  exactly?: any,
+  path: string,
+  exact?: any,
   component: any,
   isAuthenticated: boolean,
   willAuthenticate: boolean,
 }
 
 const MatchAuthenticated = ({
-  pattern,
-  exactly,
+  path,
+  exact,
   isAuthenticated,
   willAuthenticate,
   component: Component,
 }: Props) =>
-  <Match
-    exactly={exactly}
-    pattern={pattern}
+  <Route
+    exact={exact}
+    path={path}
     render={(props) => {
       if (isAuthenticated) { return <Component {...props} />; }
       if (willAuthenticate) { return null; }
