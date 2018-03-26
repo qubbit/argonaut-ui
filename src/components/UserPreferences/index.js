@@ -30,7 +30,7 @@ class UserPreferences extends Component {
       <div className='alert alert-warning'>
         Use vacation mode to release all your reservations across all the teams.
       </div>
-      <button className={submitting ? 'btn btn-primary' : 'btn'} disabled={submitting} onClick={this.handleVacationMode}>
+      <button className={submitting ? 'btn' : 'btn btn-primary'} disabled={submitting} onClick={this.handleVacationMode}>
         { submitting ? 'Working...' : 'Vacation Mode' }
       </button>
     </div>);
