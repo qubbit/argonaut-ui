@@ -42,21 +42,21 @@ type Props = {
 
 class TeamAdmin extends Component {
   componentWillMount() {
-    this.props.fetchTeamTable(this.props.params.id);
+    this.props.fetchTeamTable(this.props.match.params.id);
   }
   componentDidMount() {
-    this.props.connectToChannel(this.props.socket, this.props.params.id);
+    this.props.connectToChannel(this.props.socket, this.props.match.params.id);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.params.id !== this.props.params.id) {
+    if (nextProps.match.params.id !== this.props.match.params.id) {
       this.props.leaveChannel(this.props.channel);
-      this.props.connectToChannel(nextProps.socket, nextProps.params.id);
-      this.props.fetchTeamTable(nextProps.params.id);
+      this.props.connectToChannel(nextProps.socket, nextProps.match.params.id);
+      this.props.fetchTeamTable(nextProps.match.params.id);
     }
     if (!this.props.socket && nextProps.socket) {
-      this.props.connectToChannel(nextProps.socket, nextProps.params.id);
-      this.props.fetchTeamTable(nextProps.params.id);
+      this.props.connectToChannel(nextProps.socket, nextProps.match.params.id);
+      this.props.fetchTeamTable(nextProps.match.params.id);
     }
   }
 
@@ -67,35 +67,35 @@ class TeamAdmin extends Component {
   props: Props
 
   handleDescriptionUpdate = (data) => {
-    this.props.updateTeam(this.props.params.id, data);
+    this.props.updateTeam(this.props.match.params.id, data);
   }
 
   handleApplicationFormSubmit = (data) => {
-    const payload = { ...data, team_id: this.props.params.id };
+    const payload = { ...data, team_id: this.props.match.params.id };
 
     if(payload.id) {
       this.props.updateApplication(payload);
     } else {
-      this.props.createTeamApplication(this.props.params.id, payload);
+      this.props.createTeamApplication(this.props.match.params.id, payload);
     }
   }
 
   handleEnvironmentFormSubmit = (data) => {
-    const payload = { ...data, team_id: this.props.params.id };
+    const payload = { ...data, team_id: this.props.match.params.id };
 
     if(payload.id) {
       this.props.updateEnvironment(payload);
     } else {
-      this.props.createTeamEnvironment(this.props.params.id, payload);
+      this.props.createTeamEnvironment(this.props.match.params.id, payload);
     }
   }
 
   handleApplicationDelete = (applicationId) => {
-    this.props.deleteTeamApplication(this.props.params.id, applicationId);
+    this.props.deleteTeamApplication(this.props.match.params.id, applicationId);
   }
 
   handleEnvironmentDelete = (environmentId) => {
-    this.props.deleteTeamEnvironment(this.props.params.id, environmentId);
+    this.props.deleteTeamEnvironment(this.props.match.params.id, environmentId);
   }
 
   handleApplicationUpdate = (data) => {
