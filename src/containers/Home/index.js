@@ -1,5 +1,6 @@
 // @flow
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { css, StyleSheet } from 'aphrodite';
 import { fetchTeams, createTeam, joinTeam, leaveTeam, deleteTeam } from '../../actions/teams';

@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
-import { BrowserRouter, Miss } from 'react-router';
+import { withRouter } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { authenticate, unauthenticate, logout } from '../../actions/session';
 
@@ -20,7 +21,6 @@ import MatchAuthenticated from '../../components/MatchAuthenticated';
 import RedirectAuthenticated from '../../components/RedirectAuthenticated';
 import Sidebar from '../../components/Sidebar';
 import UserProfileForm from '../../components/UserProfileForm';
-
 
 import { Team as TeamType } from '../../types';
 
@@ -46,50 +46,43 @@ class App extends Component {
 
   props: Props
 
-  handleLogout = (router) => this.props.logout(router);
+  handleLogout = (history) => this.props.logout(history);
 
   render() {
-    const { isAuthenticated, willAuthenticate, currentUserTeams } = this.props;
+    const { isAuthenticated, willAuthenticate, currentUserTeams, history } = this.props;
     const authProps = { isAuthenticated, willAuthenticate };
     const authStyles = {  width: '100%', marginLeft: '64px' };
 
-    return (
-      <BrowserRouter>
-        {({ router, location }) => (
-          <div style={{ display: 'flex', flex: '1' }}>
-            <Alert pathname={location.pathname} />
-            {isAuthenticated &&
-              <Sidebar
-                router={router}
-                teams={currentUserTeams}
-                onLogoutClick={this.handleLogout}
-              />
-            }
-            <div style={ isAuthenticated ? authStyles : {} }>
-              <MatchAuthenticated exactly pattern="/" component={Home} {...authProps} />
-              <MatchAuthenticated exactly pattern="/t/:id" component={Team} {...authProps} />
-              <MatchAuthenticated exactly pattern="/t/:id/admin" component={TeamAdmin} {...authProps} />
-              <MatchAuthenticated exactly pattern="/settings" component={UserSettingsContainer} {...authProps} />
-              <MatchAuthenticated exactly pattern="/settings/profile" component={UserProfileForm} {...authProps} />
-              <MatchAuthenticated exactly pattern="/admin" component={Admin} {...authProps} />
-            </div>
-            <RedirectAuthenticated exactly pattern="/login" component={Login} {...authProps} />
-            <RedirectAuthenticated exactly pattern="/signup" component={Signup} {...authProps} />
-            <RedirectAuthenticated exactly pattern="/forgot_password" component={ForgotPassword} {...authProps} />
-            <RedirectAuthenticated exactly pattern="/reset_password/:token" component={ResetPassword} {...authProps} />
-            <Miss component={NotFound} />
-          </div>
-        )}
-      </BrowserRouter>
-    );
+    return (<div style={{ display: 'flex', flex: '1' }}>
+      <Alert pathname={history.location.pathname} />
+      {isAuthenticated &&
+        <Sidebar
+          history={history}
+          teams={currentUserTeams}
+          onLogoutClick={this.handleLogout}
+        />
+      }
+      <div style={ isAuthenticated ? authStyles : {} }>
+        <MatchAuthenticated exact path="/" component={Home} {...authProps} />
+        <MatchAuthenticated exact path="/t/:id" component={Team} {...authProps} />
+        <MatchAuthenticated exact path="/t/:id/admin" component={TeamAdmin} {...authProps} />
+        <MatchAuthenticated exact path="/settings" component={UserSettingsContainer} {...authProps} />
+        <MatchAuthenticated exact path="/settings/profile" component={UserProfileForm} {...authProps} />
+        <MatchAuthenticated exact path="/admin" component={Admin} {...authProps} />
+      </div>
+      <RedirectAuthenticated exact path="/login" component={Login} {...authProps} />
+      <RedirectAuthenticated exact path="/signup" component={Signup} {...authProps} />
+      <RedirectAuthenticated exact path="/forgot_password" component={ForgotPassword} {...authProps} />
+      <RedirectAuthenticated exact path="/reset_password/:token" component={ResetPassword} {...authProps} />
+    </div>);
   }
 }
 
-export default connect(
+export default withRouter(connect(
   (state) => ({
     isAuthenticated: state.session.isAuthenticated,
     willAuthenticate: state.session.willAuthenticate,
     currentUserTeams: state.teams.currentUserTeams,
   }),
   { authenticate, unauthenticate, logout }
-)(App);
+)(App));

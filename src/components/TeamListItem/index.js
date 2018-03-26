@@ -2,7 +2,7 @@
 import React from 'react';
 import includes from 'lodash/includes';
 import { Team } from '../../types';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 type Props = {
   team: Team,

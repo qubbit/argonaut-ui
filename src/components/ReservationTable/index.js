@@ -4,7 +4,7 @@ import moment from 'moment-timezone';
 import { css, StyleSheet } from 'aphrodite';
 import { Reservation as ReservationType } from '../../types';
 import { userSettings } from '../../actions/session';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import store from '../../store';
 
 const styles = StyleSheet.create({

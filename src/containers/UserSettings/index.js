@@ -8,6 +8,7 @@ import UserTeamSettings from '../../components/UserTeamSettings';
 import UserPreferences from '../../components/UserPreferences';
 import { updateUserProfile, vacationMode } from '../../actions/user';
 import { css, StyleSheet } from 'aphrodite';
+import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 const styles = StyleSheet.create({
