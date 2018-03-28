@@ -255,7 +255,20 @@ button a, button a:hover {
   text-decoration: none;
 }
 
+.card-header h5 {
+  margin-bottom: 0;
+}
 
+.card-header {
+  border-top: 6px solid #007bff;
+  border-radius: 0 !important; /* es mucho importante */
+  background: #fff !important;
+}
+
+.card-footer {
+  padding: 0.5rem 0.75rem !important;
+  background: #fff !important;
+}
 
 .login-form-links {
   display: flex;

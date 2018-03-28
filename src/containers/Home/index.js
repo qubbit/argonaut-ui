@@ -3,7 +3,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { css, StyleSheet } from 'aphrodite';
-import { fetchTeams, createTeam, joinTeam, leaveTeam, deleteTeam } from '../../actions/teams';
+import {
+  fetchTeams,
+  createTeam,
+  joinTeam,
+  leaveTeam,
+  deleteTeam
+} from '../../actions/teams';
 import NewTeamForm from '../../components/NewTeamForm';
 import Navbar from '../../components/Navbar';
 import TeamListItem from '../../components/TeamListItem';
@@ -14,9 +20,8 @@ import { userSettings } from '../../actions/session';
 const styles = StyleSheet.create({
   card: {
     maxWidth: '500px',
-    padding: '3rem 4rem',
-    margin: '2rem auto',
-  },
+    margin: '2rem auto'
+  }
 });
 
 type Props = {
@@ -27,71 +32,81 @@ type Props = {
   joinTeam: () => void,
   leaveTeam: () => void,
   newTeamErrors: Array<string>,
-  pagination: Pagination,
-}
+  pagination: Pagination
+};
 
 type State = {
   page: number,
-  page_size: number,
-}
+  page_size: number
+};
 
 class Home extends Component {
   static contextTypes = {
-    router: PropTypes.object,
-  }
+    router: PropTypes.object
+  };
 
   constructor(props: Props) {
     super(props);
     this.state = {
       page: 1,
       page_size: 5,
-      user: userSettings(),
+      user: userSettings()
     };
   }
 
-  state: State
+  state: State;
 
   componentDidMount() {
     this.loadTeams();
   }
 
-  props: Props
+  props: Props;
 
   loadTeams() {
     const { page, page_size } = this.state;
     this.props.fetchTeams({ page, page_size });
   }
 
-  handlePagerClick = (direction) => {
+  handlePagerClick = direction => {
     if (direction === 'next') {
-      this.setState({
-        page: this.state.page + 1,
-      }, () => { this.loadTeams(); });
+      this.setState(
+        {
+          page: this.state.page + 1
+        },
+        () => {
+          this.loadTeams();
+        }
+      );
     } else if (direction === 'prev') {
-      this.setState({
-        page: this.state.page - 1,
-      }, () => { this.loadTeams(); });
+      this.setState(
+        {
+          page: this.state.page - 1
+        },
+        () => {
+          this.loadTeams();
+        }
+      );
     }
-  }
+  };
 
-  handleNewTeamSubmit = (data) => this.props.createTeam(data, this.props.history);
+  handleNewTeamSubmit = data => this.props.createTeam(data, this.props.history);
 
   handleTeamJoinOrLeave = (text, teamId) => {
-    if(text.trim() === 'Leave') {
+    if (text.trim() === 'Leave') {
       return this.props.leaveTeam(teamId);
     }
     return this.props.joinTeam(teamId, this.props.history);
-  }
+  };
 
-  handleTeamDelete = (teamId) => {
+  handleTeamDelete = teamId => {
     return this.props.deleteTeam(teamId);
-  }
+  };
 
   renderTeams() {
     const currentUserTeamIds = [];
-    this.props.currentUserTeams.map((team) => currentUserTeamIds.push(team.id));
+    this.props.currentUserTeams.map(team => currentUserTeamIds.push(team.id));
 
-    return this.props.teams.map((team) =>
+    return this.props.teams.map(team => (
       <TeamListItem
         key={team.id}
         team={team}
@@ -100,42 +115,54 @@ class Home extends Component {
         currentUserTeamIds={currentUserTeamIds}
         currentUser={this.state.user}
       />
-    );
+    ));
   }
 
   render() {
     const allowNewTeamCreation = this.state.user.is_admin;
     let newTeamFormContainer;
-    if(allowNewTeamCreation) {
-        newTeamFormContainer = <div className={`card ${css(styles.card)}`}>
-          <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Create a new team</h3>
-          <NewTeamForm onSubmit={this.handleNewTeamSubmit} errors={this.props.newTeamErrors} />
+    if (allowNewTeamCreation) {
+      newTeamFormContainer = (
+        <div className={`card w-50 ${css(styles.card)}`}>
+          <div className="card-body">
+            <h5 className="card-title">Create a new team</h5>
+            <NewTeamForm
+              onSubmit={this.handleNewTeamSubmit}
+              errors={this.props.newTeamErrors}
+            />
+          </div>
         </div>
+      );
     }
     return (
       <div style={{ flex: '1', overflowY: 'auto' }}>
         <Navbar />
-        { newTeamFormContainer }
-        <div className={`card ${css(styles.card)}`}>
-          <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Join a team</h3>
-          <div style={{ marginBottom: '1rem' }}>
-            {this.renderTeams()}
+        <div className={`card w-50 ${css(styles.card)}`}>
+          <div className="card-header">
+            <h5>
+              <i className="fas fa-users" /> Teams
+            </h5>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Pager pagination={this.props.pagination} onPagerClick={this.handlePagerClick} />
+          <div className="card-body">{this.renderTeams()}</div>
+          <div className="card-footer text-muted">
+            <Pager
+              pagination={this.props.pagination}
+              onPagerClick={this.handlePagerClick}
+            />
           </div>
         </div>
+        {newTeamFormContainer}
       </div>
     );
   }
 }
 
 export default connect(
-  (state) => ({
+  state => ({
     teams: state.teams.all,
     currentUserTeams: state.teams.currentUserTeams,
     newTeamErrors: state.teams.newTeamErrors,
-    pagination: state.teams.pagination,
+    pagination: state.teams.pagination
   }),
   { fetchTeams, createTeam, joinTeam, leaveTeam, deleteTeam }
 )(Home);
