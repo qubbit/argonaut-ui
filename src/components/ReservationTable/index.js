@@ -134,13 +134,15 @@ class ReservationCell extends Component {
         </div>
     }
 
+    const environmentType = environment.is_integration ? 'integration' : 'testing'
+
     return (
      <td onMouseOut={this.onMouseOutHandler.bind(this)} onMouseOver={this.onMouseOverHandler.bind(this)} className={'reservation-cell ' + application.name + "-" + environment.name}>
        {reservationMeta}
        <div className={'toolbar ' + visibilityClassName}>
          {reserveButton}
          {releaseButton}
-         <a href={`https://${environment.name}-${application.name}.testing.covermymeds.com/${application.ping}`} className='tool-item'>
+         <a href={`https://${environment.name}-${application.name}.${environmentType}.covermymeds.com/${application.ping}`} className='tool-item'>
            <i className='fa fa-info'></i>
            <span className='tool-label'> Info</span>
          </a>
