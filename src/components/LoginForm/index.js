@@ -48,10 +48,10 @@ class LoginForm extends Component {
         </button>
         <hr style={{ margin: '2rem 0' }} />
         <div className="login-form-links">
-          <Link to="/signup" className="btn btn-secondary">
+          <Link to="/signup" className="btn btn-outline-secondary">
             Create a New Account
           </Link>
-          <Link to="/forgot_password" className="btn btn-secondary">
+          <Link to="/forgot_password" className="btn btn-outline-secondary">
             Forgot Password
           </Link>
         </div>

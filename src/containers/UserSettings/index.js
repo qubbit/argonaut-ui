@@ -47,7 +47,7 @@ class UserSettingsContainer extends Component {
               <Tabs>
                 <TabList style={{ marginBottom: '32px' }}>
                   <Tab>
-                    <i className="fa fa-user-circle-o" /> Profile
+                    <i className="fa fa-user-circle" /> Profile
                   </Tab>
                   <Tab>
                     <i className="fa fa-adjust" /> Preferences

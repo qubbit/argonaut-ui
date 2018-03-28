@@ -10,37 +10,62 @@ type Props = {
   currentUser: User,
   onTeamJoinOrLeave: () => void,
   onTeamDelete: () => void
-}
+};
 
-const TeamListItem = ({ team, currentUserTeamIds, currentUser, onTeamJoinOrLeave, onTeamDelete }: Props) => {
+const TeamListItem = ({
+  team,
+  currentUserTeamIds,
+  currentUser,
+  onTeamJoinOrLeave,
+  onTeamDelete
+}: Props) => {
   const isJoined = includes(currentUserTeamIds, team.id);
 
   let adminButton;
   let deleteButton;
 
-  if(team.owner_id === currentUser.id) {
-      adminButton = <button className="btn btn-sm">
-          <Link to={`/t/${team.id}/admin`}>
-          <i className='fa fa-wrench'></i> Admin
+  if (team.owner_id === currentUser.id) {
+    adminButton = (
+      <button className="btn btn-sm btn-outline-primary">
+        <Link to={`/t/${team.id}/admin`}>
+          <i className="fa fa-wrench" /> Admin
         </Link>
       </button>
-      deleteButton = <button onClick={() => onTeamDelete(team.id)} className="btn btn-sm btn-danger">
-        <i className='fa fa-trash'></i> Delete
+    );
+    deleteButton = (
+      <button
+        onClick={() => onTeamDelete(team.id)}
+        className="btn btn-sm btn-danger">
+        <i className="fa fa-trash" /> Delete
       </button>
+    );
   }
 
   return (
-    <div key={team.id} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+    <div
+      key={team.id}
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginBottom: '10px'
+      }}>
       <span style={{ marginRight: '8px' }}>{team.name}</span>
-      <span className='teamControls'>
+      <span className="teamControls">
         {adminButton}
         {deleteButton}
         <button
-          onClick={(e) => onTeamJoinOrLeave(e.currentTarget.innerText, team.id)}
-          className='btn btn-sm'
-          style={{ width: '72px' }}
-        >
-          {isJoined ? <span><i className='fa fa-sign-out'></i> Leave</span> : <span><i className='fa fa-sign-in'></i> Join</span>}
+          onClick={e => onTeamJoinOrLeave(e.currentTarget.innerText, team.id)}
+          className="btn btn-sm btn-outline-secondary"
+          style={{ width: '72px' }}>
+          {isJoined ? (
+            <span>
+              <i className="fa fa-sign-out-alt" /> Leave
+            </span>
+          ) : (
+            <span>
+              <i className="fa fa-sign-in" /> Join
+            </span>
+          )}
         </button>
       </span>
     </div>

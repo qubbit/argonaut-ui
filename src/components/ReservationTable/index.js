@@ -91,7 +91,7 @@ class ReservationCell extends Component {
                       data-environment-id={environment.id}
                       data-reservation-id={reservation.id}
                       onClick={this.doRelease.bind(this)}>
-                       <i className='fa fa-2x fa-unlock'></i>
+                       <i className='fa fa-unlock'></i>
                        <span className='tool-label'>Release</span>
                       </a>;
     }
@@ -105,7 +105,7 @@ class ReservationCell extends Component {
 
     if(canReserve) {
       reserveButton = <a href='#' className='tool-item' data-application-id={application.id} data-environment-id={environment.id} onClick={this.doReserve.bind(this)}>
-         <i className='fa fa-2x fa-lock'></i>
+         <i className='fa fa-lock'></i>
          <span className='tool-label'>Reserve</span>
        </a>;
     }
@@ -142,7 +142,7 @@ class ReservationCell extends Component {
          {reserveButton}
          {releaseButton}
          <a href={`https://${environment.name}-${application.name}.testing.covermymeds.com/${application.ping}`} className='tool-item'>
-           <i className='fa fa-2x fa-info'></i>
+           <i className='fa fa-info'></i>
            <span className='tool-label'> Info</span>
          </a>
        </div>
@@ -171,7 +171,7 @@ class ReservationRow extends Component {
           <div className='toolbar'>
             <span className='tool-item'>
               <a href={`https://git.innova-partners.com/${application.repo}`}>
-                <i className='fa fa-github fa-2x'></i>
+                <i className='fab fa-github'></i>
               </a>
             </span>
           </div>

@@ -88,7 +88,7 @@ const Sidebar = ({ teams, history, onLogoutClick }: Props) =>
       activeClassName={css(styles.activeLink)}
     >
       <div className={css(styles.badge)}>
-        <span className="fa fa-plus" />
+        <i className="fas fa-users"></i>
       </div>
     </NavLink>
     <div style={{ flex: '1' }} />
@@ -106,7 +106,7 @@ const Sidebar = ({ teams, history, onLogoutClick }: Props) =>
       className={css(styles.link, styles.logoutButton)}
     >
       <div className={css(styles.badge)}>
-        <span className="fa fa-sign-out" />
+        <span className="fa fa-sign-out-alt" />
       </div>
     </button>
   </div>;
