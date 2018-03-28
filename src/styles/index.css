@@ -13,6 +13,6 @@ body {
 }
 
 .card {
-  box-shadow: 2px 2px 8px 0px hsla(0, 0%, 0%, 0.1);
+  box-shadow: 2px 2px 4px 0px hsla(0, 0%, 0%, 0.08);
   border: 1px solid #e8e8e8;
 }
