@@ -14,22 +14,22 @@ export function fetchUserTeams(userId) {
     });
 }
 
-export function createTeam(data, router) {
+export function createTeam(data, history) {
   return (dispatch) => api.post('/teams', data)
     .then((response) => {
       dispatch({ type: 'CREATE_TEAM_SUCCESS', response });
-      router.transitionTo(`/t/${response.data.id}`);
+      history.push(`/t/${response.data.id}`);
     })
     .catch((error) => {
       dispatch({ type: 'CREATE_TEAM_FAILURE', error });
     });
 }
 
-export function joinTeam(teamId, router) {
+export function joinTeam(teamId, history) {
   return (dispatch) => api.post(`/teams/${teamId}/join`)
     .then((response) => {
       dispatch({ type: 'TEAM_JOINED', response });
-      router.transitionTo(`/t/${response.data.id}`);
+      history.push(`/t/${response.data.id}`);
     });
 }
 

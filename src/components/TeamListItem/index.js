@@ -20,6 +20,7 @@ const TeamListItem = ({
   onTeamDelete
 }: Props) => {
   const isJoined = includes(currentUserTeamIds, team.id);
+  const buttonClassSuffix = isJoined ? 'secondary' : 'success';
 
   let adminButton;
   let deleteButton;
@@ -55,7 +56,7 @@ const TeamListItem = ({
         {deleteButton}
         <button
           onClick={e => onTeamJoinOrLeave(e.currentTarget.innerText, team.id)}
-          className="btn btn-sm btn-outline-secondary"
+          className={`btn btn-sm btn-outline-${buttonClassSuffix}`}
           style={{ width: '72px' }}>
           {isJoined ? (
             <span>
