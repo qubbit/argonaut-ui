@@ -28,7 +28,7 @@ class NewTeamForm extends Component {
             component="input"
             className="form-control"
           />
-          <div className="input-group-btn">
+          <div className="input-group-append">
             <button type="submit" className="btn btn-primary" disabled={submitting}>
               {submitting ? 'Saving...' : 'Submit'}
             </button>
