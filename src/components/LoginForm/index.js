@@ -48,7 +48,7 @@ class LoginForm extends Component {
         </button>
         <hr style={{ margin: '2rem 0' }} />
         <div className="login-form-links">
-          <Link to="/signup" className="btn btn-outline-secondary">
+          <Link to="/signup" className="btn btn-outline-success">
             Create a New Account
           </Link>
           <Link to="/forgot_password" className="btn btn-outline-secondary">
