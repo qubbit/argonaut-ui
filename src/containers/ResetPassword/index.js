@@ -12,14 +12,10 @@ type Props = {
 }
 
 class ForgotPassword extends Component {
-  static contextTypes = {
-    router: PropTypes.object,
-  }
-
   props: Props
 
   handleResetPassword = (data) => {
-    return this.props.resetPassword({ ...data, token: this.props.params.token }, this.context.router);
+    return this.props.resetPassword({ ...data, token: this.props.params.token }, this.props.history);
   }
 
   render() {

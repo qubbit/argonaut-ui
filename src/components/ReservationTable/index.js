@@ -10,7 +10,6 @@ import store from '../../store';
 const styles = StyleSheet.create({
   container: {
     flex: '1',
-    padding: '10px 10px 0 10px',
     background: '#fff',
     overflowY: 'auto',
   }

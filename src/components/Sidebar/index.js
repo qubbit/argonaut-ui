@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
   sidebar: {
     display: 'flex',
     flexDirection: 'column',
-    background: '#2E3C56',
+    background: '#007bff',
     position: 'fixed',
     height: '100%'
   },

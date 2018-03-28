@@ -45,7 +45,7 @@ class UserSettingsContainer extends Component {
           <div className={`card ${css(styles.card)}`} style={{ display: 'flex', margin: '2em auto' }}>
             <div style={{ padding: '32px' }}>
               <Tabs>
-                <TabList style={{ marginBottom: '32px' }}>
+                <TabList style={{ marginBottom: '32px', color: '#007bff', borderBottom: '1px solid #007bff' }}>
                   <Tab>
                     <i className="fa fa-user-circle" /> Profile
                   </Tab>

@@ -7,7 +7,7 @@ tr.application-row {
   height: 64px
 }
 
-strong, b {
+strong, b, .table thead th {
   font-weight: 600 !important;
 }
 
@@ -255,6 +255,11 @@ button a, button a:hover {
   text-decoration: none;
 }
 
+.react-tabs__tab--selected {
+  border-color: #007bff !important;
+  color: #007bff !important;
+}
+
 .card-header h5 {
   margin-bottom: 0;
 }
@@ -265,7 +270,7 @@ button a, button a:hover {
   background: #fff !important;
 }
 
-.card-footer {
+.card-footer-compact {
   padding: 0.5rem 0.75rem !important;
   background: #fff !important;
 }

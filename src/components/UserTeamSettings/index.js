@@ -5,13 +5,12 @@ import TeamListItem from '../TeamListItem';
 import { joinTeam, leaveTeam, deleteTeam } from '../../actions/teams';
 
 class UserTeamSettings extends Component {
-
   handleTeamJoinOrLeave = (text, teamId) => {
     // yikes
     if(text.trim() === 'Leave') {
       return this.props.leaveTeam(teamId);
     }
-    return this.props.joinTeam(teamId, this.context.router);
+    return this.props.joinTeam(teamId, this.props.history);
   }
 
   handleTeamDelete = (teamId) => {

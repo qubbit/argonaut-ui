@@ -12,13 +12,9 @@ type Props = {
 }
 
 class Signup extends Component {
-  static contextTypes = {
-    router: PropTypes.object,
-  }
-
   props: Props
 
-  handleSignup = (data) => this.props.signup(data, this.context.router);
+  handleSignup = (data) => this.props.signup(data, this.props.history);
 
   render() {
     return (
