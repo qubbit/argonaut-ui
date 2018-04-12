@@ -9,58 +9,63 @@ import Errors from '../Errors';
 const styles = StyleSheet.create({
   card: {
     maxWidth: '500px',
-    padding: '3rem 4rem',
-    margin: '2rem auto',
-  },
+    margin: '2rem auto'
+  }
 });
 
 type Props = {
   onSubmit: () => void,
   submitting: boolean,
   handleSubmit: () => void,
-  errors: any,
-}
+  errors: any
+};
 
 class ForgotPasswordForm extends Component {
-  props: Props
+  props: Props;
 
-  handleSubmit = (data) => this.props.onSubmit(data);
+  handleSubmit = data => this.props.onSubmit(data);
 
   render() {
     const { errors, handleSubmit, pristine, submitting } = this.props;
 
     return (
-      <form
-        className={`card ${css(styles.card)}`}
-        onSubmit={handleSubmit(this.handleSubmit)}
-      >
-        <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Forgot Password</h3>
-        <div style={{ marginBottom: '1rem' }}>
-          <Field
-            name="email"
-            type="email"
-            component={Input}
-            placeholder="Email"
-          />
-          <Errors name="email" errors={errors} />
+      <div className={`card w-50 ${css(styles.card)}`}>
+        <div className="card-header">
+          <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>
+            Forgot Password
+          </h3>
         </div>
-        <button
-          type="submit"
-          disabled={submitting || pristine}
-          className="btn btn-block btn-primary"
-        >
-          {submitting ? 'Submitting...' : 'Reset Password'}
-        </button>
-        <hr style={{ margin: '2rem 0' }} />
-        <p>
-          On the off chance you remembered your password, click here to <Link to="/login"> login</Link>.
-        </p>
-      </form>
+        <div className="card-body">
+          <form onSubmit={handleSubmit(this.handleSubmit)}>
+            <div style={{ marginBottom: '1rem' }}>
+              <Field
+                name="email"
+                type="email"
+                component={Input}
+                placeholder="Email"
+              />
+              <Errors name="email" errors={errors} />
+            </div>
+            <button
+              type="submit"
+              disabled={submitting || pristine}
+              className="btn btn-block btn-primary">
+              {submitting ? 'Submitting...' : 'Reset Password'}
+            </button>
+          </form>
+        </div>
+        <div className="card-footer">
+          <p>
+            On the off chance you remembered your password, click here to{' '}
+            <Link to="/login"> login</Link>.
+          </p>
+        </div>
+      </div>
     );
   }
 }
 
-const validate = (values) => {
+const validate = values => {
   const errors = {};
 
   if (!values.email) {
@@ -72,5 +77,5 @@ const validate = (values) => {
 
 export default reduxForm({
   form: 'forgot_password',
-  validate,
+  validate
 })(ForgotPasswordForm);

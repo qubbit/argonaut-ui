@@ -14,17 +14,20 @@ type Props = {
   readOnly?: boolean
 }
 
-const Input = ({ input, label, type, placeholder, meta, style, inputStyle, className, readOnly }: Props) => {
-  return <div style={{ ...style }}>
-    {label && <label htmlFor={input.name}>{label}</label>}
+const Input = ({ id, input, label, type, placeholder, meta, style, inputStyle, className, readOnly }: Props) => {
+  const containerClassName = type === 'checkbox' ? 'form-check' : 'form-group';
+
+  return <div className={containerClassName} style={{ ...style }}>
     <input
       {...input}
+      id={id}
       type={type}
       placeholder={placeholder}
       style={{ ...inputStyle }}
       className={className || 'form-control'}
       readOnly={readOnly}
     />
+    {label && <label htmlFor={input.name}>{label}</label>}
     {meta.touched && meta.error &&
       <div style={{ fontSize: '85%', color: '#cc5454' }}>{meta.error}</div>
     }

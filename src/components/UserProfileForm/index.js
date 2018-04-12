@@ -138,12 +138,12 @@ class UserProfileForm extends Component {
             style={{ display: 'inline' }}
             readOnly={true}
           />
-          <button className='btn' onClick={this.regenerateToken} style={{ marginTop: '1rem' }}><i className='fa fa-refresh' /> Regenerate</button>
+          <button className='btn btn-secondary' onClick={this.regenerateToken} style={{ marginTop: '1rem' }}><i className='fa fa-sync' /> Regenerate</button>
           <Errors name="api_token" errors={errors} />
         </div>
         <div style={{ marginBottom: '1rem' }}>
           <div className='alert alert-info'>
-            This permanent token lets you access the read-only API. You may regenerate a new token if you think your current one is compromised.
+            This permanent token lets you access Argonaut using the <a href='https://rubygems.org/gems/argonaut-cli'>argonaut-cli</a> gem or using HTTP. You may regenerate a new token if you think your current one is compromised.
           </div>
         </div>
         <button

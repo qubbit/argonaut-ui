@@ -1,9 +1,5 @@
-html {
-  font-size: 62.5%;
-}
-
 table {
-  width: '100%';
+  width: 100%;
 }
 
 tr.application-row {
@@ -11,7 +7,7 @@ tr.application-row {
   height: 64px
 }
 
-strong, b {
+strong, b, .table thead th {
   font-weight: 600 !important;
 }
 
@@ -158,7 +154,6 @@ input[type='password'] {
 
 .tool-label {
   display: inline-block;
-  vertical-align: super;
   margin-left: 7px;
 }
 
@@ -255,8 +250,29 @@ main {
   margin: 20px 0;
 }
 
-button a {
-  color: #000;
+button a, button a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.react-tabs__tab--selected {
+  border-color: #007bff !important;
+  color: #007bff !important;
+}
+
+.card-header h5 {
+  margin-bottom: 0;
+}
+
+.card-header {
+  border-top: 6px solid #007bff;
+  border-radius: 0 !important; /* es mucho importante */
+  background: #fff !important;
+}
+
+.card-footer-compact {
+  padding: 0.5rem 0.75rem !important;
+  background: #fff !important;
 }
 
 .login-form-links {

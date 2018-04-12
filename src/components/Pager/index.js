@@ -17,8 +17,11 @@ class Pager extends Component {
     const { pagination: { total_pages, page_number } } = this.props;
 
     return (
-      <nav>
-        <div style={{ display: 'flex', marginBottom: '.5rem' }}>
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'  }}>
+        <div style={{ fontSize: '85%', textAlign: 'center' }}>
+          Page {page_number} of {total_pages}
+        </div>
+        <div style={{ display: 'flex' }}>
           <PagerButton
             direction="prev"
             disabled={page_number === 1}
@@ -29,9 +32,6 @@ class Pager extends Component {
             disabled={page_number === total_pages}
             onPagerClick={this.handleClick}
           />
-        </div>
-        <div style={{ fontSize: '85%', textAlign: 'center' }}>
-          Page {page_number} of {total_pages}
         </div>
       </nav>
     );

@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import store from './store';
 import App from './containers/App';
 import './styles/bootstrap.css';
-import './styles/font-awesome.css';
+import './styles/fontawesome-all.css';
 import './styles/index.css';
 
 ReactDOM.render(
