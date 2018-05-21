@@ -15,7 +15,7 @@ class ForgotPassword extends Component {
   props: Props
 
   handleResetPassword = (data) => {
-    return this.props.resetPassword({ ...data, token: this.props.params.token }, this.props.history);
+    return this.props.resetPassword({ ...data, token: this.props.match.params.token }, this.props.history);
   }
 
   render() {
