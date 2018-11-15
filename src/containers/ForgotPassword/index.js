@@ -1,34 +1,37 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { forgotPassword } from '../../actions/session';
-import ForgotPasswordForm from '../../components/ForgotPasswordForm';
-import Navbar from '../../components/Navbar';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { forgotPassword } from "../../actions/session";
+import ForgotPasswordForm from "../../components/ForgotPasswordForm";
+import Navbar from "../../components/Navbar";
 
 type Props = {
   forgotPassword: () => void,
-  errors: Array<string>,
-}
+  errors: Array<string>
+};
 
 class ForgotPassword extends Component {
-  props: Props
+  props: Props;
 
-  handleForgotPassword = (data) => this.props.forgotPassword(data, this.props.history);
+  handleForgotPassword = data =>
+    this.props.forgotPassword(data, this.props.history);
 
   render() {
     return (
-      <div style={{ flex: '1' }}>
+      <div style={{ flex: "1" }}>
         <Navbar />
-        <ForgotPasswordForm onSubmit={this.handleForgotPassword} errors={this.props.errors} />
+        <ForgotPasswordForm
+          onSubmit={this.handleForgotPassword}
+          errors={this.props.errors}
+        />
       </div>
     );
   }
 }
 
 export default connect(
-  (state) => ({
-    errors: state.session.forgotPasswordErrors,
+  state => ({
+    errors: state.session.forgotPasswordErrors
   }),
   { forgotPassword }
 )(ForgotPassword);
