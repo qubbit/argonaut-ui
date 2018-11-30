@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { authenticate, unauthenticate, logout } from '../../actions/session';
+import { ThemeProvider } from 'styled-components';
 
 import Home from '../Home';
 import Login from '../Login';
@@ -48,85 +49,92 @@ class App extends Component {
   handleLogout = history => this.props.logout(history);
 
   render() {
-    //debugger;
     console.log(this.props);
     const {
       isAuthenticated,
       willAuthenticate,
       currentUserTeams,
-      history
+      history,
+      theme
     } = this.props;
     const authProps = { isAuthenticated, willAuthenticate };
     const authStyles = { width: '100%', marginLeft: '64px' };
 
     return (
-      <div style={{ display: 'flex', flex: '1' }}>
-        <Alert pathname={history.location.pathname} />
-        {isAuthenticated && (
-          <Sidebar
-            history={history}
-            teams={currentUserTeams}
-            onLogoutClick={this.handleLogout}
-          />
-        )}
-        <div style={isAuthenticated ? authStyles : {}}>
-          <MatchAuthenticated exact path="/" component={Home} {...authProps} />
-          <MatchAuthenticated
+      <ThemeProvider theme={{ primary: theme.colorHex }}>
+        <div style={{ display: 'flex', flex: '1' }}>
+          <Alert pathname={history.location.pathname} />
+          {isAuthenticated && (
+            <Sidebar
+              history={history}
+              teams={currentUserTeams}
+              onLogoutClick={this.handleLogout}
+            />
+          )}
+          <div style={isAuthenticated ? authStyles : {}}>
+            <MatchAuthenticated
+              exact
+              path="/"
+              component={Home}
+              {...authProps}
+            />
+            <MatchAuthenticated
+              exact
+              path="/t/:id"
+              component={Team}
+              {...authProps}
+            />
+            <MatchAuthenticated
+              exact
+              path="/t/:id/admin"
+              component={TeamAdmin}
+              {...authProps}
+            />
+            <MatchAuthenticated
+              exact
+              path="/settings"
+              component={UserSettingsContainer}
+              {...authProps}
+            />
+            <MatchAuthenticated
+              exact
+              path="/settings/profile"
+              component={UserProfileForm}
+              {...authProps}
+            />
+            <MatchAuthenticated
+              exact
+              path="/admin"
+              component={Admin}
+              {...authProps}
+            />
+          </div>
+          <RedirectAuthenticated
             exact
-            path="/t/:id"
-            component={Team}
+            path="/login"
+            component={Login}
             {...authProps}
           />
-          <MatchAuthenticated
+          <RedirectAuthenticated
             exact
-            path="/t/:id/admin"
-            component={TeamAdmin}
+            path="/signup"
+            component={Signup}
             {...authProps}
           />
-          <MatchAuthenticated
+          <RedirectAuthenticated
             exact
-            path="/settings"
-            component={UserSettingsContainer}
+            path="/forgot_password"
+            component={ForgotPassword}
             {...authProps}
           />
-          <MatchAuthenticated
+          <RedirectAuthenticated
             exact
-            path="/settings/profile"
-            component={UserProfileForm}
-            {...authProps}
-          />
-          <MatchAuthenticated
-            exact
-            path="/admin"
-            component={Admin}
+            path="/reset_password/:token"
+            component={ResetPassword}
             {...authProps}
           />
         </div>
-        <RedirectAuthenticated
-          exact
-          path="/login"
-          component={Login}
-          {...authProps}
-        />
-        <RedirectAuthenticated
-          exact
-          path="/signup"
-          component={Signup}
-          {...authProps}
-        />
-        <RedirectAuthenticated
-          exact
-          path="/forgot_password"
-          component={ForgotPassword}
-          {...authProps}
-        />
-        <RedirectAuthenticated
-          exact
-          path="/reset_password/:token"
-          component={ResetPassword}
-          {...authProps}
-        />
-      </div>
+      </ThemeProvider>
     );
   }
 }
@@ -136,7 +144,8 @@ export default withRouter(
     state => ({
       isAuthenticated: state.session.isAuthenticated,
       willAuthenticate: state.session.willAuthenticate,
-      currentUserTeams: state.teams.currentUserTeams
+      currentUserTeams: state.teams.currentUserTeams,
+      theme: state.application.theme
     }),
     { authenticate, unauthenticate, logout }
   )(App)

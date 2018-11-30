@@ -1,7 +1,9 @@
 const initialState = {
-  type: 'custom', // custom | dynamic | preset
-  colorHex: null,
-  colorName: ''
+  theme: {
+    type: localStorage.getItem('themeColorType') || 'custom', // custom | dynamic | preset
+    colorHex: localStorage.getItem('themeColorHex') || '#007bff',
+    colorName: ''
+  }
 };
 
 function colorForToday() {
@@ -13,19 +15,19 @@ export default function(state = initialState, action) {
     case 'CHANGE_THEME_COLOR':
       let chosenColor;
       const { type, color } = action.options;
-      debugger;
+
       if (type === 'dynamic') {
         chosenColor = colorForToday();
-      } else if (type === 'custom') {
-        chosenColor = color;
       } else {
         chosenColor = color;
       }
 
       return {
         ...state,
-        type,
-        colorHex: chosenColor
+        theme: {
+          type,
+          colorHex: chosenColor
+        }
       };
     default:
       return state;
