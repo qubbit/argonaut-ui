@@ -10,6 +10,7 @@ import { updateUserProfile, vacationMode } from '../../actions/user';
 import { css, StyleSheet } from 'aphrodite';
 import 'react-tabs/style/react-tabs.css';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import styled from 'styled-components';
 
 const styles = StyleSheet.create({
   card: {
@@ -18,34 +19,46 @@ const styles = StyleSheet.create({
   }
 });
 
+const StyledTabList = styled(TabList)`
+  margin-bottom: 32px;
+  color: ${props => props.theme.primary};
+  border-bottom: 1px solid ${props => props.theme.primary};
+  & .react-tabs__tab--selected {
+    border-color: ${props => props.theme.primary} !important;
+    color: ${props => props.theme.primary} !important;
+  }
+`;
+
 type Props = {
   params: {
     id: number
   },
   currentUser: Object,
   pagination: Pagination
-}
+};
 
 class UserSettingsContainer extends Component {
-
-  props: Props
+  props: Props;
 
   // NOTE: we are returning a Promise object here
   // this allows redux-form to set the submitting flag to
   // true until the promise is resolved
-  handleUserProfileUpdate = (data) => this.props.updateUserProfile(data);
+  handleUserProfileUpdate = data => this.props.updateUserProfile(data);
 
-  handleVacationMode = (user) => this.props.vacationMode(this.props.currentUser.id);
+  handleVacationMode = user =>
+    this.props.vacationMode(this.props.currentUser.id);
 
   render() {
     return (
       <div style={{ display: 'flex', flex: '1' }}>
         <div style={{ display: 'flex', flexDirection: 'column', flex: '1' }}>
-          <Navbar/>
-          <div className={`card ${css(styles.card)}`} style={{ display: 'flex', margin: '2em auto' }}>
+          <Navbar />
+          <div
+            className={`card ${css(styles.card)}`}
+            style={{ display: 'flex', margin: '2em auto' }}>
             <div style={{ padding: '32px' }}>
               <Tabs>
-                <TabList style={{ marginBottom: '32px', color: '#007bff', borderBottom: '1px solid #007bff' }}>
+                <StyledTabList>
                   <Tab>
                     <i className="fa fa-user-circle" /> Profile
                   </Tab>
@@ -58,20 +71,33 @@ class UserSettingsContainer extends Component {
                   <Tab>
                     <i className="fa fa-info-circle" /> About
                   </Tab>
-                </TabList>
+                </StyledTabList>
 
                 <TabPanel>
-                  <UserProfileForm user={this.props.currentUser} onSubmit={this.handleUserProfileUpdate} />
+                  <UserProfileForm
+                    user={this.props.currentUser}
+                    onSubmit={this.handleUserProfileUpdate}
+                  />
                 </TabPanel>
                 <TabPanel>
-                  <UserPreferences user={this.props.currentUser} onVacationMode={this.handleVacationMode} />
+                  <UserPreferences
+                    user={this.props.currentUser}
+                    onVacationMode={this.handleVacationMode}
+                  />
                 </TabPanel>
                 <TabPanel>
-                  <UserTeamSettings user={this.props.currentUser} teamEventHandlers={this.handleUserProfileUpdate} />
+                  <UserTeamSettings
+                    user={this.props.currentUser}
+                    teamEventHandlers={this.handleUserProfileUpdate}
+                  />
                 </TabPanel>
                 <TabPanel>
-                  <div className='alert alert-info'>
-                    <p>Shipping of Argonaut was made possible by <strong>Gopal Adhikari</strong>, and the following contributors.</p>
+                  <div className="alert alert-info">
+                    <p>
+                      Shipping of Argonaut was made possible by{' '}
+                      <strong>Gopal Adhikari</strong>, and the following
+                      contributors.
+                    </p>
                     <ul>
                       <li>Matt Bramson </li>
                     </ul>
@@ -98,7 +124,8 @@ class UserSettingsContainer extends Component {
   }
 }
 
-export default connect( (state) => ({
+export default connect(
+  state => ({
     currentUser: state.session.currentUser,
     pagination: state.team.pagination,
     teams: state.teams,

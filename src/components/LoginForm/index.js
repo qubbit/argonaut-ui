@@ -2,15 +2,9 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
-import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
-
-const styles = StyleSheet.create({
-  card: {
-    maxWidth: '500px',
-    margin: '2rem auto'
-  }
-});
+import Card from '../../elements/card';
+import Button from '../../elements/button';
 
 type Props = {
   onSubmit: () => void,
@@ -27,7 +21,7 @@ class LoginForm extends Component {
     const { handleSubmit, submitting } = this.props;
 
     return (
-      <div className={`card w-50 ${css(styles.card)}`}>
+      <Card className='card w-50'>
         <div className="card-header">
           <h3 style={{ textAlign: 'center' }}>Login to Argonaut</h3>
         </div>
@@ -48,12 +42,12 @@ class LoginForm extends Component {
               component={Input}
               style={{ marginBottom: '1rem' }}
             />
-            <button
+            <Button
               type="submit"
               disabled={submitting}
               className="btn btn-block btn-primary">
               {submitting ? 'Logging in...' : 'Login'}
-            </button>
+            </Button>
           </form>
         </div>
         <div className="card-footer">
@@ -66,7 +60,7 @@ class LoginForm extends Component {
             </Link>
           </div>
         </div>
-      </div>
+      </Card>
     );
   }
 }

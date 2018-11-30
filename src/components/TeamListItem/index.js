@@ -3,6 +3,7 @@ import React from 'react';
 import includes from 'lodash/includes';
 import { Team } from '../../types';
 import { Link } from 'react-router-dom';
+import Button from '../../elements/button';
 
 type Props = {
   team: Team,
@@ -27,11 +28,11 @@ const TeamListItem = ({
 
   if (team.owner_id === currentUser.id) {
     adminButton = (
-      <button className="btn btn-sm btn-outline-primary">
+      <Button className="btn btn-sm btn-outline-primary">
         <Link to={`/t/${team.id}/admin`}>
           <i className="fa fa-wrench" /> Admin
         </Link>
-      </button>
+      </Button>
     );
     deleteButton = (
       <button

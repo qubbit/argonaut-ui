@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { css, StyleSheet } from 'aphrodite';
 import {
   fetchTeams,
   createTeam,
@@ -16,13 +15,8 @@ import TeamListItem from '../../components/TeamListItem';
 import Pager from '../../components/Pager';
 import { Team, Pagination } from '../../types';
 import { userSettings } from '../../actions/session';
-
-const styles = StyleSheet.create({
-  card: {
-    maxWidth: '500px',
-    margin: '2rem auto'
-  }
-});
+import styled from 'styled-components';
+import Card from '../../elements/card';
 
 type Props = {
   teams: Array<Team>,
@@ -123,7 +117,7 @@ class Home extends Component {
     let newTeamFormContainer;
     if (allowNewTeamCreation) {
       newTeamFormContainer = (
-        <div className={`card w-50 ${css(styles.card)}`}>
+        <Card className="card w-50">
           <div className="card-body">
             <h5 className="card-title">Create a new team</h5>
             <NewTeamForm
@@ -131,13 +125,13 @@ class Home extends Component {
               errors={this.props.newTeamErrors}
             />
           </div>
-        </div>
+        </Card>
       );
     }
     return (
       <div style={{ flex: '1', overflowY: 'auto' }}>
         <Navbar />
-        <div className={`card w-50 ${css(styles.card)}`}>
+        <Card className="card w-50">
           <div className="card-header">
             <h5>
               <i className="fas fa-users" /> Teams
@@ -150,7 +144,7 @@ class Home extends Component {
               onPagerClick={this.handlePagerClick}
             />
           </div>
-        </div>
+        </Card>
         {newTeamFormContainer}
       </div>
     );
