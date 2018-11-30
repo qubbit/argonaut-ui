@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Button from '../../elements/button';
 import { changeThemeColor } from '../../actions/application';
+import { colorForToday } from '../../utils';
 
 type Props = {
   onSubmit: () => void,
@@ -12,20 +13,20 @@ type Props = {
 
 const THEME_COLORS = {
   'Heroku Purple': '#6f3bff',
-  Red: '#f44336',
+  'Grape Fuit': '#f44336',
   'Bubble Gum': '#e91e63',
-  X: '#9c27b0',
+  Aubergine: '#9c27b0',
   'New Orleans': '#673ab7',
-  X3: '#3f51b5',
-  X4: '#2196f3',
-  X5: '#03a9f4',
-  X6: '#00bcd4',
+  Cobalt: '#3f51b5',
+  Sky: '#2196f3',
+  Arctic: '#03a9f4',
+  Cerulean: '#00bcd4',
   Teal: '#009688',
-  'Vine Snek': '#4caf50',
-  'High Vis': '#8bc34a',
+  Moss: '#4caf50',
+  'Vine Snek': '#8bc34a',
   'Kinda CMM': '#ff9800',
   Punkin: '#ff5722',
-  Brown: '#795548',
+  Chocolate: '#795548',
   Slate: '#9e9e9e',
   Centrist: '#607d8b'
 };
@@ -52,54 +53,73 @@ class UserPreferences extends Component {
 
   render() {
     const { submitting } = this.state;
+    const { theme } = this.props.application;
 
     return (
       <div style={{ width: '640px' }}>
-        <h4>Theme Color</h4>
         <div className="theme-chooser">
-          {Object.keys(THEME_COLORS).map(x => (
+          <h4>Theme color</h4>
+          <div>
+            Current: {theme.color} {theme.name && `(${theme.name})`}
+          </div>
+          <div style={{ marginTop: '10px' }} className="theme-chooser-presets">
+            {Object.keys(THEME_COLORS).map(x => (
+              <button
+                key={`color-${x}`}
+                title={x}
+                onClick={() =>
+                  this.handleChangeThemeColor({
+                    type: 'preset',
+                    color: THEME_COLORS[x],
+                    name: x
+                  })
+                }
+                style={{
+                  backgroundColor: THEME_COLORS[x],
+                  border: '0 none',
+                  borderRadius: '3px',
+                  height: '24px',
+                  marginRight: '7px',
+                  width: '24px',
+                  verticalAlign: 'text-bottom'
+                }}
+              />
+            ))}
             <button
-              key={`color-${x}`}
-              title={x}
+              style={{
+                backgroundColor: colorForToday(),
+                border: '0 none',
+                borderRadius: '3px',
+                color: '#fff',
+                height: '24px',
+                marginRight: '7px'
+              }}
               onClick={() =>
                 this.handleChangeThemeColor({
-                  type: 'preset',
-                  color: THEME_COLORS[x]
+                  type: 'dynamic'
+                })
+              }>
+              Dynamic
+            </button>{' '}
+          </div>
+          <div style={{ marginTop: '10px' }}>
+            <input
+              type="color"
+              id="custom-color-input"
+              onChange={e =>
+                this.handleChangeThemeColor({
+                  type: 'custom',
+                  color: e.target.value
                 })
               }
-              style={{
-                width: '24px',
-                height: '24px',
-                marginRight: '5px',
-                border: '0 none',
-                backgroundColor: THEME_COLORS[x]
-              }}
-            />
-          ))}
-        </div>
-        <Button
-          className="btn btn-sm btn-primary"
-          onClick={() =>
-            this.handleChangeThemeColor({
-              type: 'dynamic'
-            })
-          }>
-          Dynamic
-        </Button>{' '}
-        (New color everyday)<br />
-        <input
-          type="color"
-          onChange={e =>
-            this.handleChangeThemeColor({
-              type: 'custom',
-              color: e.target.value
-            })
-          }
-        />{' '}
-        Custom
-        <div className="alert alert-info">
-          Theme color is persisted using local storage. Clearing the browser
-          data will also clear the custom theme color you've set
+            />{' '}
+            <label htmlFor="custom-color-input">Custom</label>
+          </div>
+          <div className="alert alert-info">
+            Dynamic color is based on the day of the year. Theme color is
+            persisted using local storage. Clearing the browser data will also
+            clear the custom theme color you've set
+          </div>
         </div>
         <hr />
         <h4>Gone fishin'</h4>

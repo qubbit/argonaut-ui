@@ -3,7 +3,6 @@ import React from 'react';
 import includes from 'lodash/includes';
 import { Team } from '../../types';
 import { Link } from 'react-router-dom';
-import Button from '../../elements/button';
 import OutlineButton from '../../elements/outline_button';
 
 type Props = {

@@ -15,7 +15,6 @@ import TeamListItem from '../../components/TeamListItem';
 import Pager from '../../components/Pager';
 import { Team, Pagination } from '../../types';
 import { userSettings } from '../../actions/session';
-import styled from 'styled-components';
 import Card from '../../elements/card';
 
 type Props = {

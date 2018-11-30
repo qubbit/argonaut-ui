@@ -20,7 +20,6 @@ import MatchAuthenticated from '../../components/MatchAuthenticated';
 import RedirectAuthenticated from '../../components/RedirectAuthenticated';
 import Sidebar from '../../components/Sidebar';
 import UserProfileForm from '../../components/UserProfileForm';
-import styled from 'styled-components';
 
 import { Team as TeamType } from '../../types';
 
@@ -49,7 +48,6 @@ class App extends Component {
   handleLogout = history => this.props.logout(history);
 
   render() {
-    console.log(this.props);
     const {
       isAuthenticated,
       willAuthenticate,
@@ -61,7 +59,7 @@ class App extends Component {
     const authStyles = { width: '100%', marginLeft: '64px' };
 
     return (
-      <ThemeProvider theme={{ primary: theme.colorHex }}>
+      <ThemeProvider theme={{ primary: theme.color }}>
         <div style={{ display: 'flex', flex: '1' }}>
           <Alert pathname={history.location.pathname} />
           {isAuthenticated && (

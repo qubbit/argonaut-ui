@@ -1,17 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Link } from 'react-router-dom';
-import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
 import Errors from '../Errors';
-
-const styles = StyleSheet.create({
-  card: {
-    maxWidth: '500px',
-    margin: '2rem auto'
-  }
-});
+import Card from '../../elements/card';
+import Button from '../../elements/button';
+import StyledLink from '../../elements/styled_link';
 
 type Props = {
   onSubmit: () => void,
@@ -29,7 +23,7 @@ class ForgotPasswordForm extends Component {
     const { errors, handleSubmit, pristine, submitting } = this.props;
 
     return (
-      <div className={`card w-50 ${css(styles.card)}`}>
+      <Card className={`card w-50`}>
         <div className="card-header">
           <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>
             Forgot Password
@@ -46,21 +40,21 @@ class ForgotPasswordForm extends Component {
               />
               <Errors name="email" errors={errors} />
             </div>
-            <button
+            <Button
               type="submit"
               disabled={submitting || pristine}
               className="btn btn-block btn-primary">
               {submitting ? 'Submitting...' : 'Reset Password'}
-            </button>
+            </Button>
           </form>
         </div>
         <div className="card-footer">
           <p>
             On the off chance you remembered your password, click here to{' '}
-            <Link to="/login"> login</Link>.
+            <StyledLink to="/login"> login</StyledLink>.
           </p>
         </div>
-      </div>
+      </Card>
     );
   }
 }
