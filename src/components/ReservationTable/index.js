@@ -21,7 +21,6 @@ type Props = {
 
 class ReservationTableHeader extends Component {
   render() {
-    console.log(this.props.theme);
     var environmentNames = this.props.environments.map(env => (
       <th key={`environment-${env.name}-${env.id}`}>{env.name}</th>
     ));
