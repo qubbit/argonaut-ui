@@ -16,14 +16,18 @@ const StyledNavLink = styled(NavLink)`
   position: relative;
   display: flex;
   width: 65px;
-  color: rgba(255, 255, 255, 0.6);
-  &:hover: {
+  color: rgb(255, 255, 255);
+  &:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  &:focus {
     text-decoration: none;
   }
-  &:focus: {
-    text-decoration: none;
+  & .active {
+    color: red;
   }
-  &:active: {
+  &:active {
     color: #fff;
     &:after: {
       position: absolute;
@@ -49,13 +53,7 @@ const Badge = styled.div`
   font-size: 20px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
-`;
-
-const LogoutButton = styled.button`
-  padding: 0;
-  background: transparent;
-  border: 0;
-  cursor: pointer;
+  box-shadow: 2px 3px 3px #0604046b;
 `;
 
 type TeamLinkProps = {
@@ -91,11 +89,11 @@ const Sidebar = ({ teams, history, onLogoutClick }: Props) => (
         <span className="fa fa-cog" />
       </Badge>
     </StyledNavLink>
-    <LogoutButton onClick={() => onLogoutClick(history)}>
+    <StyledNavLink to="#" onClick={() => onLogoutClick(history)}>
       <Badge>
         <span className="fa fa-sign-out-alt" />
       </Badge>
-    </LogoutButton>
+    </StyledNavLink>
   </StyledSidebar>
 );
 

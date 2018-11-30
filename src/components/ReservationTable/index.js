@@ -6,6 +6,7 @@ import { Reservation as ReservationType } from "../../types";
 import { userSettings } from "../../actions/session";
 import { Link } from "react-router-dom";
 import store from "../../store";
+import StyledLink from '../../elements/styled_link';
 
 const styles = StyleSheet.create({
   container: {
@@ -302,11 +303,11 @@ class ReservationTable extends Component {
     } else if (this.props.team.owner_id === this.state.user.id) {
       nodes.push(
         <div key="add-stuff-link-container" className="disappointed">
-          <Link to={`/t/${this.props.team.id}/admin`} className="btn btn-sm">
+          <StyledLink to={`/t/${this.props.team.id}/admin`} className="btn btn-sm">
             <h3>
               <i className="fa fa-wrench" /> Go on and add them!
             </h3>
-          </Link>
+          </StyledLink>
         </div>
       );
     }

@@ -15,7 +15,7 @@ const THEME_COLORS = {
   Red: '#f44336',
   'Bubble Gum': '#e91e63',
   X: '#9c27b0',
-  X2: '#673ab7',
+  'New Orleans': '#673ab7',
   X3: '#3f51b5',
   X4: '#2196f3',
   X5: '#03a9f4',
@@ -23,9 +23,9 @@ const THEME_COLORS = {
   Teal: '#00bcd4',
   'Vine Snek': '#4caf50',
   'High Vis': '#8bc34a',
-  CMM: '#ff9800',
+  'Kinda CMM': '#ff9800',
   Punkin: '#ff5722',
-  Brown: '#607d8b',
+  Brown: '#795548',
   Slate: '#9e9e9e',
   Centrist: '#607d8b'
 };
@@ -61,6 +61,7 @@ class UserPreferences extends Component {
           {Object.keys(THEME_COLORS).map(x => (
             <button
               key={`color-${x}`}
+              title={x}
               onClick={() =>
                 this.handleChangeThemeColor({
                   type: 'preset',
@@ -77,7 +78,8 @@ class UserPreferences extends Component {
             />
           ))}
         </div>
-        <Button className="btn btn-sm btn-primary">Dynamic</Button>
+        <Button className="btn btn-sm btn-primary">Dynamic</Button> (New color
+        everyday)<br />
         <input
           type="color"
           onChange={() =>
