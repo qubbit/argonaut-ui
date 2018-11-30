@@ -1,26 +1,27 @@
 // @flow
-import React, { Component } from "react";
-import { withRouter } from "react-router";
-import { connect } from "react-redux";
-import { authenticate, unauthenticate, logout } from "../../actions/session";
+import React, { Component } from 'react';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import { authenticate, unauthenticate, logout } from '../../actions/session';
 
-import Home from "../Home";
-import Login from "../Login";
-import Signup from "../Signup";
-import ForgotPassword from "../ForgotPassword";
-import ResetPassword from "../ResetPassword";
-import Alert from "../Alert";
-import Team from "../Team";
-import TeamAdmin from "../TeamAdmin";
-import Admin from "../Admin";
-import UserSettingsContainer from "../UserSettings";
+import Home from '../Home';
+import Login from '../Login';
+import Signup from '../Signup';
+import ForgotPassword from '../ForgotPassword';
+import ResetPassword from '../ResetPassword';
+import Alert from '../Alert';
+import Team from '../Team';
+import TeamAdmin from '../TeamAdmin';
+import Admin from '../Admin';
+import UserSettingsContainer from '../UserSettings';
 
-import MatchAuthenticated from "../../components/MatchAuthenticated";
-import RedirectAuthenticated from "../../components/RedirectAuthenticated";
-import Sidebar from "../../components/Sidebar";
-import UserProfileForm from "../../components/UserProfileForm";
+import MatchAuthenticated from '../../components/MatchAuthenticated';
+import RedirectAuthenticated from '../../components/RedirectAuthenticated';
+import Sidebar from '../../components/Sidebar';
+import UserProfileForm from '../../components/UserProfileForm';
+import styled from 'styled-components';
 
-import { Team as TeamType } from "../../types";
+import { Team as TeamType } from '../../types';
 
 type Props = {
   authenticate: () => void,
@@ -33,7 +34,7 @@ type Props = {
 
 class App extends Component {
   componentDidMount() {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
     if (token) {
       this.props.authenticate();
@@ -47,6 +48,8 @@ class App extends Component {
   handleLogout = history => this.props.logout(history);
 
   render() {
+    //debugger;
+    console.log(this.props);
     const {
       isAuthenticated,
       willAuthenticate,
@@ -54,10 +57,10 @@ class App extends Component {
       history
     } = this.props;
     const authProps = { isAuthenticated, willAuthenticate };
-    const authStyles = { width: "100%", marginLeft: "64px" };
+    const authStyles = { width: '100%', marginLeft: '64px' };
 
     return (
-      <div style={{ display: "flex", flex: "1" }}>
+      <div style={{ display: 'flex', flex: '1' }}>
         <Alert pathname={history.location.pathname} />
         {isAuthenticated && (
           <Sidebar
