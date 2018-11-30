@@ -42,7 +42,7 @@ class Home extends Component {
     super(props);
     this.state = {
       page: 1,
-      page_size: 5,
+      page_size: 10,
       user: userSettings()
     };
   }
