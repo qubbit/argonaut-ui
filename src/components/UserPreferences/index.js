@@ -20,7 +20,7 @@ const THEME_COLORS = {
   X4: '#2196f3',
   X5: '#03a9f4',
   X6: '#00bcd4',
-  Teal: '#00bcd4',
+  Teal: '#009688',
   'Vine Snek': '#4caf50',
   'High Vis': '#8bc34a',
   'Kinda CMM': '#ff9800',
@@ -48,7 +48,6 @@ class UserPreferences extends Component {
 
   handleChangeThemeColor(c) {
     this.props.changeThemeColor(c);
-    console.log(c);
   }
 
   render() {
@@ -78,19 +77,35 @@ class UserPreferences extends Component {
             />
           ))}
         </div>
-        <Button className="btn btn-sm btn-primary">Dynamic</Button> (New color
-        everyday)<br />
+        <Button
+          className="btn btn-sm btn-primary"
+          onClick={() =>
+            this.handleChangeThemeColor({
+              type: 'dynamic'
+            })
+          }>
+          Dynamic
+        </Button>{' '}
+        (New color everyday)<br />
         <input
           type="color"
-          onChange={() =>
-            this.handleChangeThemeColor({ type: 'custom', value: '#004023' })
+          onChange={e =>
+            this.handleChangeThemeColor({
+              type: 'custom',
+              color: e.target.value
+            })
           }
         />{' '}
         Custom
+        <div className="alert alert-info">
+          Theme color is persisted using local storage. Clearing the browser
+          data will also clear the custom theme color you've set
+        </div>
         <hr />
-        <div className="alert alert-warning">
+        <h4>Gone fishin'</h4>
+        <div className="alert alert-info">
           Use vacation mode to release all your reservations across all the
-          teams.
+          teams
         </div>
         <Button
           className={submitting ? 'btn' : 'btn btn-primary'}

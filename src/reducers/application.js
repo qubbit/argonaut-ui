@@ -1,13 +1,28 @@
+const type = localStorage.getItem('themeColorType') || 'custom';
 const initialState = {
   theme: {
-    type: localStorage.getItem('themeColorType') || 'custom', // custom | dynamic | preset
-    colorHex: localStorage.getItem('themeColorHex') || '#007bff',
+    type: type, // custom | dynamic | preset
+    colorHex: function() {
+      if (type === 'dynamic') {
+        return colorForToday();
+      } else {
+        return localStorage.getItem('themeColorHex') || '#007bff';
+      }
+    },
     colorName: ''
   }
 };
 
 function colorForToday() {
-  return '#888888';
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var diff =
+    now -
+    start +
+    (start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000;
+  var oneDay = 1000 * 60 * 60 * 24;
+  var day = Math.floor(diff / oneDay);
+  return `hsl(${day}, 50%, 50%)`;
 }
 
 export default function(state = initialState, action) {
