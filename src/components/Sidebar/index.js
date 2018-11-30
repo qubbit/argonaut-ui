@@ -53,7 +53,7 @@ const Badge = styled.div`
   font-size: 20px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 5px;
-  box-shadow: 2px 3px 3px #0604046b;
+  box-shadow: 1px 1px 3px #0604042e;
 `;
 
 type TeamLinkProps = {
