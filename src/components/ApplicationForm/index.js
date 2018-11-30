@@ -4,28 +4,29 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
+import Button from '../../elements/button';
 
 const styles = StyleSheet.create({
   card: {
     maxWidth: '400px',
     padding: '20px',
-    margin: '20px',
-  },
+    margin: '20px'
+  }
 });
 
 type Props = {
   onSubmit: () => void,
   handleSubmit: () => void,
   submitting: boolean
-}
+};
 
 class ApplicationForm extends Component {
-  props: Props
+  props: Props;
 
-  handleSubmit = (data) => {
+  handleSubmit = data => {
     this.props.onSubmit(data);
     this.props.reset();
-  }
+  };
 
   render() {
     const { handleSubmit, submitting, pristine, initialValues } = this.props;
@@ -35,27 +36,43 @@ class ApplicationForm extends Component {
     return (
       <form
         className={`card ${css(styles.card)}`}
-        onSubmit={handleSubmit(this.handleSubmit)}
-      >
+        onSubmit={handleSubmit(this.handleSubmit)}>
         <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>
-          { updating ? 'Edit' : 'Create' } application
+          {updating ? 'Edit' : 'Create'} application
         </h3>
-        <Field name="name" type="text" component={Input} placeholder="Name (probably has no spaces)" style={{ marginBottom: '1rem' }} />
-        <Field name="ping" type="text" component={Input} placeholder="Ping route (usually _ping)" style={{ marginBottom: '1rem' }} />
-        <Field name="repo" type="text" component={Input} placeholder="Repo (like pbm/epamotron)" style={{ marginBottom: '1rem' }} />
-        <button
+        <Field
+          name="name"
+          type="text"
+          component={Input}
+          placeholder="Name (probably has no spaces)"
+          style={{ marginBottom: '1rem' }}
+        />
+        <Field
+          name="ping"
+          type="text"
+          component={Input}
+          placeholder="Ping route (usually _ping)"
+          style={{ marginBottom: '1rem' }}
+        />
+        <Field
+          name="repo"
+          type="text"
+          component={Input}
+          placeholder="Repo (like pbm/epamotron)"
+          style={{ marginBottom: '1rem' }}
+        />
+        <Button
           type="submit"
           disabled={submitting || pristine}
-          className="btn btn-block btn-primary"
-        >
-          { submitting ? 'Saving...' : label }
-        </button>
+          className="btn btn-block btn-primary">
+          {submitting ? 'Saving...' : label}
+        </Button>
       </form>
     );
   }
 }
 
-const validate = (values) => {
+const validate = values => {
   const errors = {};
   if (!values.name) {
     errors.name = 'Required';
@@ -75,10 +92,8 @@ ApplicationForm = reduxForm({
   enableReinitialize: true
 })(ApplicationForm);
 
-ApplicationForm = connect(
-  (state) => ({
-    initialValues: state.team.editingApplication
-  })
-)(ApplicationForm);
+ApplicationForm = connect(state => ({
+  initialValues: state.team.editingApplication
+}))(ApplicationForm);
 
 export default ApplicationForm;

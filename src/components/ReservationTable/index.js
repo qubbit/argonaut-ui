@@ -1,18 +1,17 @@
 // @flow
-import React, { Component } from "react";
-import moment from "moment-timezone";
-import { css, StyleSheet } from "aphrodite";
-import { Reservation as ReservationType } from "../../types";
-import { userSettings } from "../../actions/session";
-import { Link } from "react-router-dom";
-import store from "../../store";
+import React, { Component } from 'react';
+import moment from 'moment-timezone';
+import { css, StyleSheet } from 'aphrodite';
+import { Reservation as ReservationType } from '../../types';
+import { userSettings } from '../../actions/session';
+import store from '../../store';
 import StyledLink from '../../elements/styled_link';
 
 const styles = StyleSheet.create({
   container: {
-    flex: "1",
-    background: "#fff",
-    overflowY: "auto"
+    flex: '1',
+    background: '#fff',
+    overflowY: 'auto'
   }
 });
 
@@ -84,9 +83,9 @@ class ReservationCell extends Component {
     const application = this.props.application;
     const environment = this.props.environment;
 
-    var user = { username: "", avatar_url: "" };
-    var time = "";
-    var reservationString = "";
+    var user = { username: '', avatar_url: '' };
+    var time = '';
+    var reservationString = '';
 
     let releaseButton;
 
@@ -97,13 +96,12 @@ class ReservationCell extends Component {
     if (canRelease) {
       releaseButton = (
         <button
-          style={{ background: "transparent", border: "0 none" }}
+          style={{ background: 'transparent', border: '0 none' }}
           className="tool-item"
           data-application-id={application.id}
           data-environment-id={environment.id}
           data-reservation-id={reservation.id}
-          onClick={this.doRelease.bind(this)}
-        >
+          onClick={this.doRelease.bind(this)}>
           <i className="fa fa-unlock" />
           <span className="tool-label">Release</span>
         </button>
@@ -119,12 +117,11 @@ class ReservationCell extends Component {
     if (canReserve) {
       reserveButton = (
         <button
-          style={{ background: "transparent", border: "0 none" }}
+          style={{ background: 'transparent', border: '0 none' }}
           className="tool-item"
           data-application-id={application.id}
           data-environment-id={environment.id}
-          onClick={this.doReserve.bind(this)}
-        >
+          onClick={this.doReserve.bind(this)}>
           <i className="fa fa-lock" />
           <span className="tool-label">Reserve</span>
         </button>
@@ -135,15 +132,15 @@ class ReservationCell extends Component {
       user = reservation.user;
 
       time = moment(reservation.reserved_at)
-        .tz(userSettings.time_zone || "America/New_York")
-        .format("MMMM D, h:mm a");
+        .tz(userSettings.time_zone || 'America/New_York')
+        .format('MMMM D, h:mm a');
       reservationString = `${user.username} since ${time}`;
     }
 
-    let visibilityClassName = "hidden";
+    let visibilityClassName = 'hidden';
 
     if (this.state.hover) {
-      visibilityClassName = "not-hidden";
+      visibilityClassName = 'not-hidden';
     }
 
     let reservationMeta;
@@ -158,27 +155,25 @@ class ReservationCell extends Component {
     }
 
     const environmentType = environment.is_integration
-      ? "integration"
-      : "testing";
+      ? 'integration'
+      : 'testing';
 
     return (
       <td
         onMouseOut={this.onMouseOutHandler.bind(this)}
         onMouseOver={this.onMouseOverHandler.bind(this)}
         className={
-          "reservation-cell " + application.name + "-" + environment.name
-        }
-      >
+          'reservation-cell ' + application.name + '-' + environment.name
+        }>
         {reservationMeta}
-        <div className={"toolbar " + visibilityClassName}>
+        <div className={'toolbar ' + visibilityClassName}>
           {reserveButton}
           {releaseButton}
           <a
             href={`https://${environment.name}-${
               application.name
             }.${environmentType}.covermymeds.com/${application.ping}`}
-            className="tool-item"
-          >
+            className="tool-item">
             <i className="fa fa-info" />
             <span className="tool-label"> Info</span>
           </a>
@@ -196,7 +191,7 @@ class ReservationRow extends Component {
 
     var x = 0;
     var cells = environments.map(env => {
-      var key = "reservation-cell-" + ++x;
+      var key = 'reservation-cell-' + ++x;
       const reservation = getReservation(application, env, reservations);
       return (
         <ReservationCell
@@ -211,9 +206,8 @@ class ReservationRow extends Component {
 
     return (
       <tr
-        className={"application-row " + application.name}
-        key={application.name}
-      >
+        className={'application-row ' + application.name}
+        key={application.name}>
         <td className="application-name">
           <strong>{application.name}</strong>
           <div className="toolbar">
@@ -245,7 +239,7 @@ class ReservationTable extends Component {
     const reservationRows = this.props.applications.map(app => {
       return (
         <ReservationRow
-          key={"reservation-row-" + ++x}
+          key={'reservation-row-' + ++x}
           reservations={this.props.reservations}
           application={app}
           environments={this.props.environments}
@@ -258,7 +252,7 @@ class ReservationTable extends Component {
       <table key="table" className="table table-bordered">
         <thead>
           <ReservationTableHeader
-            key={"reservation-table-header-0"}
+            key={'reservation-table-header-0'}
             environments={this.props.environments}
           />
         </thead>
@@ -277,7 +271,7 @@ class ReservationTable extends Component {
       nodes.push(
         <div key="noApplicationsMessage" className="disappointed">
           <h3>
-            No applications to show{" "}
+            No applications to show{' '}
             <span role="img" aria-label="sad face">
               😞
             </span>
@@ -290,7 +284,7 @@ class ReservationTable extends Component {
       nodes.push(
         <div key="noEnvironmentsMessage" className="disappointed">
           <h3>
-            No environments to show{" "}
+            No environments to show{' '}
             <span role="img" aria-label="sad face">
               😢
             </span>
@@ -303,7 +297,9 @@ class ReservationTable extends Component {
     } else if (this.props.team.owner_id === this.state.user.id) {
       nodes.push(
         <div key="add-stuff-link-container" className="disappointed">
-          <StyledLink to={`/t/${this.props.team.id}/admin`} className="btn btn-sm">
+          <StyledLink
+            to={`/t/${this.props.team.id}/admin`}
+            className="btn btn-sm">
             <h3>
               <i className="fa fa-wrench" /> Go on and add them!
             </h3>
@@ -316,8 +312,7 @@ class ReservationTable extends Component {
         className={css(styles.container)}
         ref={c => {
           this.container = c;
-        }}
-      >
+        }}>
         {nodes}
       </div>
     );

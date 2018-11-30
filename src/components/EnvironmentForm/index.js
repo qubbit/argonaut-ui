@@ -4,6 +4,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
+import Button from '../../elements/button';
 
 const styles = StyleSheet.create({
   card: {
@@ -62,12 +63,12 @@ class EnvironmentForm extends Component {
           label="Integration Environment"
           style={{ marginBottom: '1rem' }}
         />
-        <button
+        <Button
           type="submit"
           disabled={submitting || pristine}
           className="btn btn-block btn-primary">
           {submitting ? 'Saving...' : label}
-        </button>
+        </Button>
       </form>
     );
   }
