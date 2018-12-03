@@ -23,17 +23,9 @@ const TeamListItem = ({
   const isJoined = includes(currentUserTeamIds, team.id);
   const buttonClassSuffix = isJoined ? 'secondary' : 'success';
 
-  let adminButton;
   let deleteButton;
 
-  if (team.owner_id === currentUser.id) {
-    adminButton = (
-      <OutlineButton className="btn btn-sm btn-outline-primary">
-        <Link to={`/t/${team.id}/admin`}>
-          <i className="fa fa-wrench" /> Admin
-        </Link>
-      </OutlineButton>
-    );
+  if (team.owner_id === currentUser.id || currentUser.is_admin) {
     deleteButton = (
       <button
         onClick={() => onTeamDelete(team.id)}
@@ -53,7 +45,11 @@ const TeamListItem = ({
       }}>
       <span style={{ marginRight: '8px' }}>{team.name}</span>
       <span className="teamControls">
-        {adminButton}
+        <OutlineButton className="btn btn-sm btn-outline-primary">
+          <Link to={`/t/${team.id}/admin`}>
+            <i className="fa fa-wrench" /> Admin
+          </Link>
+        </OutlineButton>
         {deleteButton}
         <button
           onClick={e => onTeamJoinOrLeave(e.currentTarget.innerText, team.id)}
