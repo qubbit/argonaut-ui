@@ -4,6 +4,7 @@ import includes from 'lodash/includes';
 import { Team } from '../../types';
 import { Link } from 'react-router-dom';
 import OutlineButton from '../../elements/outline_button';
+import PopupConfirm from '../PopupConfirm';
 
 type Props = {
   team: Team,
@@ -23,12 +24,13 @@ const TeamListItem = ({
   const isJoined = includes(currentUserTeamIds, team.id);
   const buttonClassSuffix = isJoined ? 'secondary' : 'success';
 
+  const onTeamDeleteConfirmation = () => {};
   let deleteButton;
 
   if (team.owner_id === currentUser.id || currentUser.is_admin) {
     deleteButton = (
       <button
-        onClick={() => onTeamDelete(team.id)}
+        onClick={() => onTeamDeleteConfirmation(team.id)}
         className="btn btn-sm btn-danger">
         <i className="fa fa-trash" /> Delete
       </button>
@@ -44,6 +46,10 @@ const TeamListItem = ({
         marginBottom: '10px'
       }}>
       <span style={{ marginRight: '8px' }}>{team.name}</span>
+      <PopupConfirm visible onConfirm={() => onTeamDelete(team.id)}>
+        Are you sure you want to delete <strong>{team.name}</strong>
+      </PopupConfirm>
+
       <span className="teamControls">
         <Link to={`/t/${team.id}/admin`}>
           <OutlineButton className="btn btn-sm btn-outline-primary">
