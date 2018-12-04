@@ -52,10 +52,11 @@ const Badge = styled.div`
   margin: 12px auto;
   font-size: 20px;
   background: rgba(255, 255, 255, 0.2);
-  border-radius: 5px;
   box-shadow: 1px 1px 3px #0604042e;
+  .active & {
+    border-right: 3px solid rgba(255, 255, 255, 0.6);
+  }
 `;
-
 type TeamLinkProps = {
   team: Team
 };
@@ -68,7 +69,6 @@ const TeamLink = ({ team }: TeamLinkProps) => (
     </Badge>
   </StyledNavLink>
 );
-
 type Props = {
   teams: Array<Team>,
   history: Object,
@@ -77,8 +77,10 @@ type Props = {
 
 const Sidebar = ({ teams, history, onLogoutClick }: Props) => (
   <StyledSidebar className="sidebar">
-    {teams.map(team => <TeamLink key={team.id} team={team} />)}
-    <StyledNavLink to="/">
+    {teams.map(team => (
+      <TeamLink key={team.id} team={team} />
+    ))}
+    <StyledNavLink exact to="/">
       <Badge>
         <i className="fas fa-users" />
       </Badge>
@@ -96,5 +98,4 @@ const Sidebar = ({ teams, history, onLogoutClick }: Props) => (
     </StyledNavLink>
   </StyledSidebar>
 );
-
 export default Sidebar;
