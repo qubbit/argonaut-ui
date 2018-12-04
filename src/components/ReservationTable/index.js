@@ -223,6 +223,7 @@ class ReservationCell extends Component {
 
     return (
       <td
+        style={{ minWidth: '96px' }}
         onMouseOut={this.onMouseOutHandler.bind(this)}
         onMouseOver={this.onMouseOverHandler.bind(this)}
         className={
