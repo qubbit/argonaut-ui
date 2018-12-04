@@ -6,6 +6,8 @@ import { Reservation as ReservationType } from '../../types';
 import { userSettings } from '../../actions/session';
 import store from '../../store';
 import StyledLink from '../../elements/styled_link';
+import ThinButton from '../../elements/thin_button';
+import styled from 'styled-components';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,6 +20,18 @@ const styles = StyleSheet.create({
 type Props = {
   reservations: Array<ReservationType>
 };
+
+const PopupConfirm = styled.div`
+  position: absolute;
+  padding: 10px;
+  width: 250px;
+  z-index: 999;
+  color: #444;
+  background: #fff;
+  text-align: left;
+  box-shadow: -1px 1px 5px -1px ${props => props.theme.primary};
+  border-right: 5px solid ${props => props.theme.primary};
+`;
 
 class ReservationTableHeader extends Component {
   render() {
@@ -42,7 +56,11 @@ function getReservation(app, env, reservations) {
 class ReservationCell extends Component {
   constructor(props) {
     super(props);
-    this.state = { reserved: false, hover: false };
+    this.state = {
+      showReleaseConfirmation: false,
+      reserved: false,
+      hover: false
+    };
   }
 
   onMouseOverHandler(e) {
@@ -59,7 +77,19 @@ class ReservationCell extends Component {
       application_id: d.applicationId,
       environment_id: d.environmentId
     };
+
     this.props.eventHandlers.onReserveClick(data);
+    this.setState({ showReleaseConfirmation: false });
+    e.preventDefault();
+  };
+
+  showReleaseConf = e => {
+    this.setState({ showReleaseConfirmation: true });
+    e.preventDefault();
+  };
+
+  dismissReleaseConf = e => {
+    this.setState({ showReleaseConfirmation: false });
     e.preventDefault();
   };
 
@@ -78,9 +108,7 @@ class ReservationCell extends Component {
   };
 
   render() {
-    const reservation = this.props.reservation;
-    const application = this.props.application;
-    const environment = this.props.environment;
+    const { reservation, application, environment, currentUser } = this.props;
 
     var user = { username: '', avatar_url: '' };
     var time = '';
@@ -91,19 +119,55 @@ class ReservationCell extends Component {
     var canRelease =
       reservation &&
       (userSettings().is_admin || reservation.user.id === userSettings().id);
+    const username = currentUser.username;
 
     if (canRelease) {
       releaseButton = (
-        <button
-          style={{ background: 'transparent', border: '0 none' }}
-          className="tool-item"
-          data-application-id={application.id}
-          data-environment-id={environment.id}
-          data-reservation-id={reservation.id}
-          onClick={this.doRelease.bind(this)}>
-          <i className="fa fa-unlock" />
-          <span className="tool-label">Release</span>
-        </button>
+        <div>
+          <ThinButton
+            onClick={this.showReleaseConf.bind(this)}
+            className="tool-item">
+            <i className="fa fa-unlock" />
+            <span className="tool-label">Release</span>
+          </ThinButton>
+          <PopupConfirm
+            style={{
+              visibility: this.state.showReleaseConfirmation
+                ? 'visible'
+                : 'hidden'
+            }}>
+            <span>
+              <div>
+                Are you sure you want to release {environment.name}:
+                {application.name} which is in use by{' '}
+                <strong>
+                  {reservation.user.username === username
+                    ? 'you'
+                    : reservation.user.username}
+                </strong>
+                ?
+              </div>
+              <hr />
+              <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                <ThinButton
+                  data-application-id={application.id}
+                  data-environment-id={environment.id}
+                  data-reservation-id={reservation.id}
+                  style={{
+                    borderColor: '#28a745',
+                    background: '#fff',
+                    color: '#28a745'
+                  }}
+                  onClick={this.doRelease.bind(this)}>
+                  Yes
+                </ThinButton>
+                <ThinButton onClick={this.dismissReleaseConf.bind(this)}>
+                  No
+                </ThinButton>
+              </div>
+            </span>
+          </PopupConfirm>
+        </div>
       );
     }
 
@@ -115,15 +179,15 @@ class ReservationCell extends Component {
 
     if (canReserve) {
       reserveButton = (
-        <button
-          style={{ background: 'transparent', border: '0 none' }}
+        <ThinButton
           className="tool-item"
           data-application-id={application.id}
           data-environment-id={environment.id}
+          style={{ display: 'block' }}
           onClick={this.doReserve.bind(this)}>
           <i className="fa fa-lock" />
           <span className="tool-label">Reserve</span>
-        </button>
+        </ThinButton>
       );
     }
 
@@ -168,14 +232,16 @@ class ReservationCell extends Component {
         <div className={'toolbar ' + visibilityClassName}>
           {reserveButton}
           {releaseButton}
-          <a
-            href={`https://${environment.name}-${
-              application.name
-            }.${environmentType}.covermymeds.com/${application.ping}`}
-            className="tool-item">
-            <i className="fa fa-info" />
-            <span className="tool-label"> Info</span>
-          </a>
+          <ThinButton>
+            <a
+              href={`https://${environment.name}-${
+                application.name
+              }.${environmentType}.covermymeds.com/${application.ping}`}
+              className="tool-item">
+              <i className="fa fa-info" />
+              <span className="tool-label"> Info</span>
+            </a>
+          </ThinButton>
         </div>
       </td>
     );
@@ -184,9 +250,7 @@ class ReservationCell extends Component {
 
 class ReservationRow extends Component {
   render() {
-    const application = this.props.application;
-    const environments = this.props.environments;
-    const reservations = this.props.reservations;
+    const { application, environments, reservations, currentUser } = this.props;
 
     var x = 0;
     var cells = environments.map(env => {
@@ -198,6 +262,7 @@ class ReservationRow extends Component {
           reservation={reservation}
           application={application}
           environment={env}
+          currentUser={currentUser}
           eventHandlers={this.props.eventHandlers}
         />
       );
@@ -243,6 +308,7 @@ class ReservationTable extends Component {
           application={app}
           environments={this.props.environments}
           eventHandlers={this.props.eventHandlers}
+          currentUser={this.state.user}
         />
       );
     });
