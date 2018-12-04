@@ -97,6 +97,7 @@ class ReservationCell extends Component {
     const d = e.currentTarget.dataset;
     const data = { reservation_id: parseInt(d.reservationId, 10) };
     this.props.eventHandlers.onReleaseClick(data);
+    this.setState({ hover: false });
     e.preventDefault();
   };
 
