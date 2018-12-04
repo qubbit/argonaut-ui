@@ -238,7 +238,7 @@ main {
 
 
 /* create a new team page */
-.teamControls button:not(:last-child){
+.teamControls button:not(:last-child), .teamControls a:not(:last-child) {
   margin-right: 10px;
 }
 

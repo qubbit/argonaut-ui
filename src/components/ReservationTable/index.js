@@ -224,7 +224,7 @@ class ReservationCell extends Component {
 
     return (
       <td
-        style={{ minWidth: '96px' }}
+        style={{ minWidth: '100px' }}
         onMouseOut={this.onMouseOutHandler.bind(this)}
         onMouseOver={this.onMouseOverHandler.bind(this)}
         className={
@@ -234,16 +234,16 @@ class ReservationCell extends Component {
         <div className={'toolbar ' + visibilityClassName}>
           {reserveButton}
           {releaseButton}
-          <ThinButton>
-            <a
-              href={`https://${environment.name}-${
-                application.name
-              }.${environmentType}.covermymeds.com/${application.ping}`}
-              className="tool-item">
+          <a
+            href={`https://${environment.name}-${
+              application.name
+            }.${environmentType}.covermymeds.com/${application.ping}`}
+            className="tool-item">
+            <ThinButton>
               <i className="fa fa-info" />
               <span className="tool-label"> Info</span>
-            </a>
-          </ThinButton>
+            </ThinButton>
+          </a>
         </div>
       </td>
     );

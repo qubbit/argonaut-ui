@@ -45,11 +45,11 @@ const TeamListItem = ({
       }}>
       <span style={{ marginRight: '8px' }}>{team.name}</span>
       <span className="teamControls">
-        <OutlineButton className="btn btn-sm btn-outline-primary">
-          <Link to={`/t/${team.id}/admin`}>
+        <Link to={`/t/${team.id}/admin`}>
+          <OutlineButton className="btn btn-sm btn-outline-primary">
             <i className="fa fa-wrench" /> Admin
-          </Link>
-        </OutlineButton>
+          </OutlineButton>
+        </Link>
         {deleteButton}
         <button
           onClick={e => onTeamJoinOrLeave(e.currentTarget.innerText, team.id)}
