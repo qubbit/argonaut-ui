@@ -47,7 +47,7 @@ const TeamListItem = ({
       }}>
       <span style={{ marginRight: '8px' }}>{team.name}</span>
       <PopupConfirm visible onConfirm={() => onTeamDelete(team.id)}>
-        Are you sure you want to delete <strong>{team.name}</strong>
+        Are you sure you want to delete the team <strong>{team.name}</strong>?
       </PopupConfirm>
 
       <span className="teamControls">
