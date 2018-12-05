@@ -1,114 +1,101 @@
 // @flow
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { css, StyleSheet } from 'aphrodite';
 import { Team } from '../../types';
+import styled from 'styled-components';
 
-const styles = StyleSheet.create({
-  sidebar: {
-    display: 'flex',
-    flexDirection: 'column',
-    background: '#007bff',
-    position: 'fixed',
-    height: '100%'
-  },
+const StyledSidebar = styled.div`
+  background: ${props => props.theme.primary};
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  height: 100%;
+`;
 
-  link: {
-    position: 'relative',
-    display: 'flex',
-    width: '65px',
-    color: 'rgba(255,255,255,.6)',
-    ':hover': {
-      textDecoration: 'none',
-    },
-    ':focus': {
-      textDecoration: 'none',
-    },
-  },
-
-  activeLink: {
-    color: '#fff',
-    ':after': {
-      position: 'absolute',
-      top: '12px',
-      bottom: '12px',
-      left: '0',
-      width: '3px',
-      background: 'rgba(255,255,255,.2)',
-      borderTopRightRadius: '3px',
-      borderBottomRightRadius: '3px',
-      content: '""',
+const StyledNavLink = styled(NavLink)`
+  position: relative;
+  display: flex;
+  width: 65px;
+  color: rgb(255, 255, 255);
+  &:hover {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  &:focus {
+    text-decoration: none;
+  }
+  & .active {
+    color: red;
+  }
+  &:active {
+    color: #fff;
+    &:after: {
+      position: absolute;
+      top: 12px;
+      bottom: 12px;
+      left: 0;
+      width: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      content: '';
     }
-  },
+  }
+`;
 
-  badge: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '45px',
-    height: '45px',
-    margin: '12px auto',
-    fontSize: '20px',
-    background: 'rgba(255,255,255,.2)',
-    borderRadius: '5px',
-  },
-
-  logoutButton: {
-    padding: '0',
-    background: 'transparent',
-    border: '0',
-    cursor: 'pointer',
-  },
-});
-
+const Badge = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  margin: 12px auto;
+  font-size: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 1px 1px 3px #0604042e;
+  .active & {
+    border-right: 3px solid rgba(255, 255, 255, 0.6);
+  }
+`;
 type TeamLinkProps = {
   team: Team
-}
+};
 
-const TeamLink = ({ team }: TeamLinkProps) =>
+const TeamLink = ({ team }: TeamLinkProps) => (
   // TODO: use slug in URL
-  <NavLink to={"/t/" + team.id} className={css(styles.link)} activeClassName={css(styles.activeLink)}>
-    <div className={css(styles.badge)}>
-      <span>{team.name.substring(0,3).toUpperCase()}</span>
-    </div>
-  </NavLink>;
-
+  <StyledNavLink to={'/t/' + team.id}>
+    <Badge>
+      <span>{team.name.substring(0, 3).toUpperCase()}</span>
+    </Badge>
+  </StyledNavLink>
+);
 type Props = {
   teams: Array<Team>,
   history: Object,
-  onLogoutClick: () => void,
-}
+  onLogoutClick: () => void
+};
 
-const Sidebar = ({ teams, history, onLogoutClick }: Props) =>
-  <div className={css(styles.sidebar)}>
-    {teams.map((team) => <TeamLink key={team.id} team={team} />)}
-    <NavLink
-      to="/"
-      className={css(styles.link)}
-      activeClassName={css(styles.activeLink)}
-    >
-      <div className={css(styles.badge)}>
-        <i className="fas fa-users"></i>
-      </div>
-    </NavLink>
+const Sidebar = ({ teams, history, onLogoutClick }: Props) => (
+  <StyledSidebar className="sidebar">
+    {teams.map(team => (
+      <TeamLink key={team.id} team={team} />
+    ))}
+    <StyledNavLink exact to="/">
+      <Badge>
+        <i className="fas fa-users" />
+      </Badge>
+    </StyledNavLink>
     <div style={{ flex: '1' }} />
-    <NavLink
-      to="/settings"
-      className={css(styles.link)}
-      activeClassName={css(styles.activeLink)}
-    >
-      <div className={css(styles.badge)}>
+    <StyledNavLink to="/settings">
+      <Badge>
         <span className="fa fa-cog" />
-      </div>
-    </NavLink>
-    <button
-      onClick={() => onLogoutClick(history)}
-      className={css(styles.link, styles.logoutButton)}
-    >
-      <div className={css(styles.badge)}>
+      </Badge>
+    </StyledNavLink>
+    <StyledNavLink to="#" onClick={() => onLogoutClick(history)}>
+      <Badge>
         <span className="fa fa-sign-out-alt" />
-      </div>
-    </button>
-  </div>;
-
+      </Badge>
+    </StyledNavLink>
+  </StyledSidebar>
+);
 export default Sidebar;

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import Errors from '../Errors';
+import Button from '../../elements/button';
 
 type Props = {
   handleSubmit: () => void,
@@ -29,9 +30,9 @@ class NewTeamForm extends Component {
             className="form-control"
           />
           <div className="input-group-append">
-            <button type="submit" className="btn btn-primary" disabled={submitting}>
+            <Button type="submit" className="btn btn-primary" disabled={submitting}>
               {submitting ? 'Saving...' : 'Submit'}
-            </button>
+            </Button>
           </div>
         </div>
         <Errors name="name" errors={errors} />

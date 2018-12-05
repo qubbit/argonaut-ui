@@ -1,25 +1,25 @@
 // @flow
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import ReservationTable from '../../components/ReservationTable';
-import TeamNavbar from '../../components/TeamNavbar';
-import Loading from '../../components/Loading';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import ReservationTable from "../../components/ReservationTable";
+import TeamNavbar from "../../components/TeamNavbar";
+import Loading from "../../components/Loading";
 import {
   fetchTeamTable,
   connectToChannel,
   leaveChannel,
   createReservation,
   deleteReservation,
-  updateTeam,
-} from '../../actions/team';
-import { Application, Environment, Reservation } from '../../types';
+  updateTeam
+} from "../../actions/team";
+import { Application, Environment, Reservation } from "../../types";
 
 type Props = {
   socket: any,
   channel: any,
   team: Object,
   params: {
-    id: number,
+    id: number
   },
   connectToChannel: () => void,
   leaveChannel: () => void,
@@ -29,8 +29,8 @@ type Props = {
   applications: Array<Application>,
   environments: Array<Environment>,
   currentUser: Object,
-  updateTeam: () => void,
-}
+  updateTeam: () => void
+};
 
 class Team extends Component {
   componentWillMount() {
@@ -56,33 +56,46 @@ class Team extends Component {
     this.props.leaveChannel(this.props.channel);
   }
 
-  props: Props
-  reservationList: () => void
+  props: Props;
+  reservationList: () => void;
 
-  handleReservation = (data) => {
+  handleReservation = data => {
     this.props.createReservation(this.props.channel, data);
-  }
+  };
 
-  handleRelease = (data) => {
+  handleRelease = data => {
     this.props.deleteReservation(this.props.channel, data);
-  }
+  };
 
-  handleDescriptionUpdate = (data) => this.props.updateTeam(this.props.match.params.id, data);
+  handleDescriptionUpdate = data =>
+    this.props.updateTeam(this.props.match.params.id, data);
 
   render() {
-    const eventHandlers = { onReserveClick: this.handleReservation, onReleaseClick: this.handleRelease }
+    const eventHandlers = {
+      onReserveClick: this.handleReservation,
+      onReleaseClick: this.handleRelease
+    };
     return (
-      <div style={{ display: 'flex', flex: '1' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', flex: '1' }}>
-          <TeamNavbar team={this.props.team} onDescriptionUpdate={this.handleDescriptionUpdate} />
-          { this.props.loadingReservations ? <Loading/> : <ReservationTable
-            reservations={this.props.reservations}
-            applications={this.props.applications}
-            environments={this.props.environments}
+      <div style={{ display: "flex", flex: "1" }}>
+        <div style={{ display: "flex", flexDirection: "column", flex: "1" }}>
+          <TeamNavbar
             team={this.props.team}
-            eventHandlers={eventHandlers}
-            ref={(c) => { this.reservationList = c; }}
-          /> }
+            onDescriptionUpdate={this.handleDescriptionUpdate}
+          />
+          {this.props.loadingReservations ? (
+            <Loading />
+          ) : (
+            <ReservationTable
+              reservations={this.props.reservations}
+              applications={this.props.applications}
+              environments={this.props.environments}
+              team={this.props.team}
+              eventHandlers={eventHandlers}
+              ref={c => {
+                this.reservationList = c;
+              }}
+            />
+          )}
         </div>
       </div>
     );
@@ -90,7 +103,7 @@ class Team extends Component {
 }
 
 export default connect(
-  (state) => ({
+  state => ({
     team: state.team.currentTeam,
     socket: state.session.socket,
     channel: state.team.channel,
@@ -99,7 +112,14 @@ export default connect(
     environments: state.team.environments,
     presentUsers: state.team.presentUsers,
     currentUser: state.session.currentUser,
-    loadingReservations: state.team.loadingReservations,
+    loadingReservations: state.team.loadingReservations
   }),
-  { fetchTeamTable, connectToChannel, leaveChannel, createReservation, deleteReservation, updateTeam }
+  {
+    fetchTeamTable,
+    connectToChannel,
+    leaveChannel,
+    createReservation,
+    deleteReservation,
+    updateTeam
+  }
 )(Team);

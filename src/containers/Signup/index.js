@@ -1,24 +1,23 @@
 // @flow
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { signup } from '../../actions/session';
-import SignupForm from '../../components/SignupForm';
-import Navbar from '../../components/Navbar';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { signup } from "../../actions/session";
+import SignupForm from "../../components/SignupForm";
+import Navbar from "../../components/Navbar";
 
 type Props = {
   signup: () => void,
-  errors: Array<string>,
-}
+  errors: Array<string>
+};
 
 class Signup extends Component {
-  props: Props
+  props: Props;
 
-  handleSignup = (data) => this.props.signup(data, this.props.history);
+  handleSignup = data => this.props.signup(data, this.props.history);
 
   render() {
     return (
-      <div style={{ flex: '1' }}>
+      <div style={{ flex: "1" }}>
         <Navbar />
         <SignupForm onSubmit={this.handleSignup} errors={this.props.errors} />
       </div>
@@ -27,8 +26,8 @@ class Signup extends Component {
 }
 
 export default connect(
-  (state) => ({
-    errors: state.session.signupErrors,
+  state => ({
+    errors: state.session.signupErrors
   }),
   { signup }
 )(Signup);

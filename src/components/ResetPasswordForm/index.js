@@ -1,71 +1,62 @@
 // @flow
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
 import Errors from '../Errors';
-
-const styles = StyleSheet.create({
-  card: {
-    maxWidth: '500px',
-    padding: '3rem 4rem',
-    margin: '2rem auto',
-  },
-});
+import Card from '../../elements/card';
+import Button from '../../elements/button';
 
 type Props = {
   onSubmit: () => void,
   submitting: boolean,
   handleSubmit: () => void,
-  errors: any,
-}
+  errors: any
+};
 
 class ResetPasswordForm extends Component {
-  props: Props
+  props: Props;
 
-  handleSubmit = (data) => this.props.onSubmit(data);
+  handleSubmit = data => this.props.onSubmit(data);
 
   render() {
     const { errors, handleSubmit, pristine, submitting } = this.props;
 
     return (
-      <form
-        className={`card ${css(styles.card)}`}
-        onSubmit={handleSubmit(this.handleSubmit)}
-      >
-        <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>Create a New Password</h3>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>Password</label>
-          <Field
-            name="password"
-            type="password"
-            component={Input}
-          />
-          <Errors name="password" errors={errors} />
-        </div>
+      <Card className="card w-50">
+        <form
+          style={{ padding: '3rem 4rem' }}
+          onSubmit={handleSubmit(this.handleSubmit)}>
+          <h3 style={{ marginBottom: '2rem', textAlign: 'center' }}>
+            Create a New Password
+          </h3>
+          <div style={{ marginBottom: '1rem' }}>
+            <label>Password</label>
+            <Field name="password" type="password" component={Input} />
+            <Errors name="password" errors={errors} />
+          </div>
 
-        <div style={{ marginBottom: '1rem' }}>
-          <label>Password confirmation</label>
-          <Field
-            name="password_confirmation"
-            type="password"
-            component={Input}
-          />
-          <Errors name="password_confirmation" errors={errors} />
-        </div>
-        <button
-          type="submit"
-          disabled={submitting || pristine}
-          className="btn btn-block btn-primary"
-        >
-          {submitting ? 'Submitting...' : 'Create Password'}
-        </button>
-      </form>
+          <div style={{ marginBottom: '1rem' }}>
+            <label>Password confirmation</label>
+            <Field
+              name="password_confirmation"
+              type="password"
+              component={Input}
+            />
+            <Errors name="password_confirmation" errors={errors} />
+          </div>
+          <Button
+            type="submit"
+            disabled={submitting || pristine}
+            className="btn btn-block btn-primary">
+            {submitting ? 'Submitting...' : 'Create Password'}
+          </Button>
+        </form>
+      </Card>
     );
   }
 }
 
-const validate = (values) => {
+const validate = values => {
   const errors = {};
 
   if (!values.password) {
@@ -83,5 +74,5 @@ const validate = (values) => {
 
 export default reduxForm({
   form: 'reset_password',
-  validate,
+  validate
 })(ResetPasswordForm);

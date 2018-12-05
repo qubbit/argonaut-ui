@@ -1,18 +1,13 @@
 // @flow
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Link } from 'react-router-dom';
-import { css, StyleSheet } from 'aphrodite';
 import Input from '../Input';
 import Errors from '../Errors';
 import { generateToken } from '../../utils/';
 
-const styles = StyleSheet.create({
-  card: {
-    maxWidth: '500px',
-    margin: '2rem auto'
-  }
-});
+import Card from '../../elements/card';
+import Button from '../../elements/button';
+import StyledLink from '../../elements/styled_link';
 
 type Props = {
   onSubmit: () => void,
@@ -33,7 +28,7 @@ class SignupForm extends Component {
     const { errors, handleSubmit, submitting } = this.props;
 
     return (
-      <div className={`card w-50 ${css(styles.card)}`}>
+      <Card className={`card w-50`}>
         <div className="card-header">
           <h3 style={{ textAlign: 'center' }}>Create an account</h3>
         </div>
@@ -66,19 +61,19 @@ class SignupForm extends Component {
               />
               <Errors name="password" errors={errors} />
             </div>
-            <button
+            <Button
               type="submit"
               disabled={submitting}
               className="btn btn-block btn-primary">
               {submitting ? 'Submitting...' : 'Sign up'}
-            </button>
+            </Button>
           </form>
         </div>
         <div className="card-footer text-center">
           <span>Have an account?</span>{' '}
-          <Link to="/login">Sign in</Link>
+          <StyledLink to="/login">Sign in</StyledLink>
         </div>
-      </div>
+      </Card>
     );
   }
 }

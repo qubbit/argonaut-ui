@@ -5,8 +5,10 @@ import teams from './teams';
 import team from './team';
 import alert from './alert';
 import user from './user';
+import application from './application';
 
 const appReducer = combineReducers({
+  application,
   form,
   session,
   teams,

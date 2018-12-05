@@ -2,18 +2,23 @@
   "name": "argonaut",
   "version": "0.1.0",
   "private": true,
+  "browserslist": [
+    "defaults"
+  ],
   "devDependencies": {
-    "babel-eslint": "^8.2.1",
-    "eslint": "^4.17.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-flowtype": "^2.20.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-flow": "^6.23.0",
+    "eslint": "5.6.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-flowtype": "^3.2.0",
     "eslint-plugin-import": "^2.0.1",
     "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.6.1"
+    "eslint-plugin-react": "^7.6.1",
+    "flow-bin": "^0.87.0"
   },
   "dependencies": {
     "aphrodite": "^1.2.5",
-    "dotenv": "^5.0.0",
+    "dotenv": "^6.1.0",
     "lodash": "^4.16.4",
     "md5": "^2.2.1",
     "moment": "^2.15.1",
@@ -24,16 +29,17 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
-    "react-router": "4.2.0",
+    "react-router": "4.3.1",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1",
+    "react-scripts": "2.1.1",
     "react-tabs": "^2.2.1",
-    "redux": "^3.6.0",
+    "redux": "^4.0.1",
     "redux-form": "^7.2.3",
-    "redux-thunk": "^2.1.0"
+    "redux-thunk": "^2.1.0",
+    "styled-components": "^4.1.1"
   },
   "scripts": {
-    "start": "BROWSER=none react-scripts start",
+    "start": "HOST=localhost BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",

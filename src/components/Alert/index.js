@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { css, StyleSheet } from 'aphrodite';
 
 const styles = StyleSheet.create({
-  // alerts are informational by default and display in blue background
+  // Alerts are informational by default and display in blue background
   alert: {
     display: 'flex',
     alignItems: 'center',
@@ -46,27 +46,27 @@ const styles = StyleSheet.create({
     cursor: 'pointer',
     border: '0',
     fontSize: '20px',
-    width: '30px',
-  },
+    width: '30px'
+  }
 });
 
 type Props = {
   message: string,
   type: string,
   timeout?: number,
-  onClose: () => void,
+  onClose: () => void
 };
 
-class Alert extends Component {
-  constructor(props) {
+class Alert extends Component<Props> {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
       backgrounds: {
-        'info': styles.alertInfo,
-        'success': styles.alertSuccess,
-        'failure': styles.alertFailure,
-        'warning': styles.alertWarning
+        info: styles.alertInfo,
+        success: styles.alertSuccess,
+        failure: styles.alertFailure,
+        warning: styles.alertWarning
       }
     };
   }
@@ -77,10 +77,11 @@ class Alert extends Component {
     }
   }
 
-  props: Props
+  props: Props;
 
   render() {
-    const backgroundColor = this.state.backgrounds[this.props.type] || styles.alertInfo;
+    const backgroundColor =
+      this.state.backgrounds[this.props.type] || styles.alertInfo;
     return (
       <div className={css(styles.alert, backgroundColor)}>
         <div style={{ width: '30px' }} />
