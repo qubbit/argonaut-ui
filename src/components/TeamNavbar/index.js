@@ -61,6 +61,17 @@ class TeamNavbar extends Component {
 
   handleDescriptionUpdate = (data: { description: string }) => this.props.onDescriptionUpdate(data);
 
+  descriptionText = () => {
+    if(this.teamIsLoaded()) {
+      const { description } = this.props.team;
+      return description ? description : 'Click here to edit description';
+    } else {
+      return '';
+    }
+  };
+
+  teamIsLoaded = () => this.props.team.id;
+
   render() {
     const { team } = this.props;
     const { editingDescription } = this.state;
@@ -81,7 +92,7 @@ class TeamNavbar extends Component {
                 className={css(styles.descriptionButton)}
                 onClick={() => this.setState({ editingDescription: true })}
               >
-                {team.description ? team.description : 'Click here to edit description'}
+                {this.descriptionText()}
               </button>
           }
         </div>
