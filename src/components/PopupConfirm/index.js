@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ThinButton from '../../elements/thin_button';
 import styled from 'styled-components';
 
+// TODO: Fix state/prop descrepancy and the onCancel handler
+
 const Wrapper = styled.div`
   position: absolute;
   padding: 10px;
@@ -18,7 +20,6 @@ class PopupConfirm extends Component {
   constructor(props) {
     super(props);
     this.state = { visible: props.visible };
-    this.defaultOnCancel.bind(this);
   }
 
   defaultOnCancel = () => {
@@ -32,7 +33,7 @@ class PopupConfirm extends Component {
       : this.defaultOnCancel;
 
     return (
-      <Wrapper style={{ display: this.state.visible ? 'block' : 'none' }}>
+      <Wrapper style={{ display: visible ? 'block' : 'none' }}>
         <div>{children}</div>
         <hr />
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
