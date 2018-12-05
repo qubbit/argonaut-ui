@@ -19,12 +19,12 @@ In a production environment you need to whitelist your front-end app's URL so it
 
 ### Contributors
 
-Following contributors have helped in development of Argonaut:
+Shipping of Argonaut was made possible by **Gopal Adhikari** and the following contributors.
 
-* Gopal Adhikari (Lead Developer)
 * Alan Baird (@abaird)
 * Chris Doggett (@DoggettCK)
 * Chris Hutchinson (@chutch1994)
+* Lucas Nestor (@lnestor)
 * Matt Bramson (@mbramson)
 * Mike Lustig (@Anachronomer)
 
