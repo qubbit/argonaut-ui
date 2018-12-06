@@ -2,9 +2,7 @@ import { reset } from 'redux-form';
 import { Socket } from 'phoenix';
 import api from '../api';
 import { fetchUserTeams } from './teams';
-import { API_URL} from '../config';
-
-const WEBSOCKET_URL = API_URL.replace(/^http/, 'ws').replace('/api', '');
+import { WEBSOCKET_URL} from '../config';
 
 function connectToSocket(dispatch) {
   const token = JSON.parse(localStorage.getItem('token'));
