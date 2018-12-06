@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
 
 const StyledTabList = styled(TabList)`
   margin-bottom: 32px;
+  padding: 0;
   color: ${props => props.theme.primary};
   border-bottom: 1px solid ${props => props.theme.primary};
   & .react-tabs__tab--selected {
