@@ -235,6 +235,7 @@ class ReservationCell extends Component {
           {reserveButton}
           {releaseButton}
           <a
+            target={'_blank'}
             href={`https://${environment.name}-${
               application.name
             }.${environmentType}.covermymeds.com/${application.ping}`}
