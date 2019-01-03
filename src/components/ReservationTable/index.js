@@ -7,7 +7,7 @@ import { userSettings } from '../../actions/session';
 import store from '../../store';
 import StyledLink from '../../elements/styled_link';
 import ThinButton from '../../elements/thin_button';
-import styled from 'styled-components';
+import PopupConfirm from '../PopupConfirm';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,18 +20,6 @@ const styles = StyleSheet.create({
 type Props = {
   reservations: Array<ReservationType>
 };
-
-const PopupConfirm = styled.div`
-  position: absolute;
-  padding: 10px;
-  width: 250px;
-  z-index: 999;
-  color: #444;
-  background: #fff;
-  text-align: left;
-  box-shadow: -1px 1px 5px -1px ${props => props.theme.primary};
-  border-right: 5px solid ${props => props.theme.primary};
-`;
 
 class ReservationTableHeader extends Component {
   render() {
@@ -71,16 +59,16 @@ class ReservationCell extends Component {
     this.setState({ hover: false });
   }
 
-  doReserve = e => {
-    const d = e.currentTarget.dataset;
-    const data = {
-      application_id: d.applicationId,
-      environment_id: d.environmentId
-    };
+  doRelease = e => {
+    const data = { reservation_id: parseInt(e, 10) };
+    this.props.eventHandlers.onReleaseClick(data);
+    this.setState({ hover: false });
+  };
 
+  doReserve = (application_id, environment_id) => {
+    const data = { application_id, environment_id };
     this.props.eventHandlers.onReserveClick(data);
     this.setState({ showReleaseConfirmation: false });
-    e.preventDefault();
   };
 
   showReleaseConf = e => {
@@ -90,14 +78,6 @@ class ReservationCell extends Component {
 
   dismissReleaseConf = e => {
     this.setState({ showReleaseConfirmation: false });
-    e.preventDefault();
-  };
-
-  doRelease = e => {
-    const d = e.currentTarget.dataset;
-    const data = { reservation_id: parseInt(d.reservationId, 10) };
-    this.props.eventHandlers.onReleaseClick(data);
-    this.setState({ hover: false });
     e.preventDefault();
   };
 
@@ -132,41 +112,18 @@ class ReservationCell extends Component {
             <span className="tool-label">Release</span>
           </ThinButton>
           <PopupConfirm
-            style={{
-              visibility: this.state.showReleaseConfirmation
-                ? 'visible'
-                : 'hidden'
-            }}>
-            <span>
-              <div>
-                Are you sure you want to release {environment.name}:
-                {application.name} which is in use by{' '}
-                <strong>
-                  {reservation.user.username === username
-                    ? 'you'
-                    : reservation.user.username}
-                </strong>
-                ?
-              </div>
-              <hr />
-              <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                <ThinButton
-                  data-application-id={application.id}
-                  data-environment-id={environment.id}
-                  data-reservation-id={reservation.id}
-                  style={{
-                    borderColor: '#28a745',
-                    background: '#fff',
-                    color: '#28a745'
-                  }}
-                  onClick={this.doRelease.bind(this)}>
-                  Yes
-                </ThinButton>
-                <ThinButton onClick={this.dismissReleaseConf.bind(this)}>
-                  No
-                </ThinButton>
-              </div>
-            </span>
+            onConfirm={() => this.doRelease(reservation.id)}
+            onCancel={() => this.setState({ showReleaseConfirmation: false })}
+            visible={this.state.showReleaseConfirmation}>
+            {' '}
+            Are you sure you want to release {environment.name}:
+            {application.name} which is in use by{' '}
+            <strong>
+              {reservation.user.username === username
+                ? 'you'
+                : reservation.user.username}
+            </strong>
+            ?
           </PopupConfirm>
         </div>
       );
@@ -182,10 +139,8 @@ class ReservationCell extends Component {
       reserveButton = (
         <ThinButton
           className="tool-item"
-          data-application-id={application.id}
-          data-environment-id={environment.id}
           style={{ display: 'block' }}
-          onClick={this.doReserve.bind(this)}>
+          onClick={() => this.doReserve(application.id, environment.id)}>
           <i className="fa fa-lock" />
           <span className="tool-label">Reserve</span>
         </ThinButton>

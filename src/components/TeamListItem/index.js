@@ -47,7 +47,6 @@ class TeamListItem extends Component {
         </button>
       );
     }
-    console.log(this.state);
     return (
       <div
         key={team.id}

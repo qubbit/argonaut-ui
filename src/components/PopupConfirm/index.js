@@ -19,12 +19,28 @@ const Wrapper = styled.div`
 class PopupConfirm extends Component {
   constructor(props) {
     super(props);
+    this.popupWrapper = React.createRef();
     this.state = { visible: props.visible };
   }
 
   defaultOnCancel = () => {
     this.setState({ visible: false });
   };
+
+  componentDidMount() {
+    const elem = this.popupWrapper.current;
+    const { right, bottom } = elem.getBoundingClientRect();
+    const deltaW = window.innerWidth - right;
+    const deltaH = window.innerHeight - bottom;
+
+    if (deltaW < 0) {
+      elem.style.right = 0;
+    }
+
+    if (deltaH < 0) {
+      elem.style.bottom = 0;
+    }
+  }
 
   render() {
     const { onConfirm, children, visible } = this.props;
@@ -33,7 +49,9 @@ class PopupConfirm extends Component {
       : this.defaultOnCancel;
 
     return (
-      <Wrapper style={{ display: visible ? 'block' : 'none' }}>
+      <Wrapper
+        ref={this.popupWrapper}
+        style={{ visibility: visible ? 'visible' : 'hidden' }}>
         <div>{children}</div>
         <hr />
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
