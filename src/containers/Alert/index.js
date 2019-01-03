@@ -10,8 +10,8 @@ type Props = {
   type: string,
   timeout?: number,
   message: string,
-  hideAlert: () => void,
-}
+  hideAlert: () => void
+};
 
 class AlertContainer extends Component {
   componentWillReceiveProps(nextProps) {
@@ -27,26 +27,26 @@ class AlertContainer extends Component {
     return false;
   }
 
-  props: Props
+  props: Props;
 
   handleClose = () => this.props.hideAlert();
 
   render() {
     const { visible, type, timeout, message } = this.props;
 
-    return visible
-      ? <Alert
+    return visible ? (
+      <Alert
         message={message}
         timeout={timeout}
         onClose={this.handleClose}
         type={type}
       />
-      : null;
+    ) : null;
   }
 }
 
 export default connect(
-  (state) => ({
+  state => ({
     message: state.alert.message,
     visible: state.alert.visible,
     timeout: state.alert.timeout,

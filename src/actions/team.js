@@ -212,6 +212,9 @@ export function deleteTeamApplication(teamId, applicationId) {
       .then(response => {
         if (response.success)
           dispatch({ type: 'DELETE_TEAM_APPLICATION_SUCCESS', response });
+      })
+      .catch(error => {
+        dispatch({ type: 'SHOW_ALERT_FAILURE', message: error.message });
       });
 }
 
@@ -222,6 +225,9 @@ export function deleteTeamEnvironment(teamId, environmentId) {
       .then(response => {
         if (response.success)
           dispatch({ type: 'DELETE_TEAM_ENVIRONMENT_SUCCESS', response });
+      })
+      .catch(error => {
+        dispatch({ type: 'SHOW_ALERT_FAILURE', message: error.message });
       });
 }
 

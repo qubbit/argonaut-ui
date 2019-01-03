@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
   container: {
     flex: '1',
     background: '#fff',
-    overflowY: 'auto'
+    overflowY: 'auto',
+    minHeight: '100vh'
   }
 });
 
