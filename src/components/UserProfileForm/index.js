@@ -47,7 +47,7 @@ class UserProfileForm extends Component {
   };
 
   render() {
-    const { errors, handleSubmit, pristine, submitting } = this.props;
+    const { error, errors, handleSubmit, pristine, submitting } = this.props;
 
     return (
       <form
@@ -67,7 +67,12 @@ class UserProfileForm extends Component {
 
         <div style={{ marginBottom: '1rem' }}>
           <label>Password</label>
-          <Field name="password" type="password" autoComplete="new-password" component={Input} />
+          <Field
+            name="password"
+            type="password"
+            autoComplete="new-password"
+            component={Input}
+          />
           <Errors name="password" errors={errors} />
         </div>
 
@@ -142,6 +147,11 @@ class UserProfileForm extends Component {
             current one is compromised.
           </div>
         </div>
+        {error && (
+          <div style={{ fontSize: '85%', color: '#cc5454' }}>
+            <p>{error}</p>
+          </div>
+        )}
         <Button
           type="submit"
           disabled={pristine || submitting}
@@ -166,6 +176,11 @@ const validate = values => {
 
   if (values.password !== values.password_confirmation) {
     errors.password_confirmation = 'Password confirmation does not match';
+  }
+
+  // Really dumb email validation regex
+  if (!/\S+@\S+\.\S+/.test(values.email)) {
+    errors.email = 'Invalid email';
   }
 
   return errors;
