@@ -178,7 +178,9 @@ UserProfileForm = reduxForm({
 
 UserProfileForm = connect(
   state => ({
-    initialValues: state.session.currentUser
+    initialValues: state.session.currentUser,
+    enableReinitialize: true,
+    keepDirtyOnReinitialize: true
   }),
   {}
 )(UserProfileForm);

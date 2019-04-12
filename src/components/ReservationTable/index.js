@@ -152,7 +152,7 @@ class ReservationCell extends Component {
       user = reservation.user;
 
       time = moment(reservation.reserved_at)
-        .tz(userSettings.time_zone || 'America/New_York')
+        .tz(userSettings().time_zone || 'America/New_York')
         .format('MMMM D, h:mm a');
       reservationString = `${user.username} since ${time}`;
     }
