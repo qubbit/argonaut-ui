@@ -109,7 +109,7 @@ class UserSettingsContainer extends Component {
                       <li>Alan Baird</li>
                     </ul>
                     <ul>
-                      <li>Mike Lusting</li>
+                      <li>Mike Lustig</li>
                     </ul>
                     <ul>
                       <li>Chris Hutchinson</li>
