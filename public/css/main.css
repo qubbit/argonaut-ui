@@ -280,3 +280,16 @@ button a, button a:hover {
   align-items: baseline;
   justify-content: space-between;
 }
+
+/* Make the team table header sticky */
+table tbody {
+  display: block;
+  max-height: 90vh;
+  overflow-y: scroll;
+}
+
+table thead, table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
