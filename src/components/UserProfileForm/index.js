@@ -51,17 +51,23 @@ class UserProfileForm extends Component {
 
     return (
       <form
+        autoComplete="nope"
         style={{ width: '640px' }}
         onSubmit={handleSubmit(this.handleSubmit)}>
         <div style={{ marginBottom: '1rem' }}>
           <label>Username</label>
-          <Field name="username" type="text" component={Input} />
+          <Field
+            name="username"
+            type="text"
+            autoComplete="new-username"
+            component={Input}
+          />
           <Errors name="username" errors={errors} />
         </div>
 
         <div style={{ marginBottom: '1rem' }}>
           <label>Password</label>
-          <Field name="password" type="password" component={Input} />
+          <Field name="password" type="password" autoComplete="new-password" component={Input} />
           <Errors name="password" errors={errors} />
         </div>
 

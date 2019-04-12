@@ -11,10 +11,11 @@ type Props = {
   style?: Object,
   inputStyle?: Object,
   className?: string,
-  readOnly?: boolean
+  readOnly?: boolean,
+  autoComplete?: boolean
 }
 
-const Input = ({ id, input, label, type, placeholder, meta, style, inputStyle, className, readOnly }: Props) => {
+const Input = ({ id, input, label, type, placeholder, meta, style, inputStyle, className, readOnly, autoComplete }: Props) => {
   const containerClassName = type === 'checkbox' ? 'form-check' : 'form-group';
 
   return <div className={containerClassName} style={{ ...style }}>
@@ -26,6 +27,7 @@ const Input = ({ id, input, label, type, placeholder, meta, style, inputStyle, c
       style={{ ...inputStyle }}
       className={className || 'form-control'}
       readOnly={readOnly}
+      autoComplete={autoComplete}
     />
     {label && <label htmlFor={input.name}>{label}</label>}
     {meta.touched && meta.error &&
